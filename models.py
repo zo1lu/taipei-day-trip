@@ -17,33 +17,35 @@ def get_attractions_by_page(page,keyword):
     else:
         query="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id"
         cursor.execute(query)
-    
     data = cursor.fetchall()
-    size = len(data)
+
+    filterd_data_size = len(data)
+    
+    #get full site data of the page
     result_data = []
     i = page*12
-    while i < size:
-        site = data[i]
-        id = site["id"]
-        img_url_list = get_image_url_list(id)
-        new_site = { **site, "images":img_url_list}
-        result_data.append(new_site)
+    while i < filterd_data_size:
+        site_data = data[i]
+        result_data.append(get_attraction_full_data(site_data))
         i+=1
+
     return {
-			"nextPage":page+1 if size>(page+1)*12 else None,
+			"nextPage":page+1 if filterd_data_size>(page+1)*12 else None,
 			"data":result_data
 		}
+
+def get_attraction_full_data(site_data):
+    id = site_data["id"]
+    return {**site_data, "images":get_image_url_list(id)}
 
 def get_image_url_list(id):
     con = mysql.connect(**DB_CONFIG)
     cursor = con.cursor(dictionary=True)
     query = "SELECT image_url FROM images WHERE attraction_id = %s"
     cursor.execute(query,(id,))
-    img_url_list = cursor.fetchall()  
-    list = []
-    for url in img_url_list:
-        list.append(url["image_url"])
-    return list
+    list = cursor.fetchall()  
+    img_url_list = list(map(lambda url:url["image_url"],list))
+    return img_url_list
 
 def get_attraction_by_id(id):
     try:
@@ -67,10 +69,5 @@ def get_mrts():
     query = "SELECT mrt_name FROM mrts INNER JOIN attractions as site ON site.mrt_id = mrts.id GROUP BY mrts.id ORDER BY COUNT(site.name) DESC LIMIT 40"
     cursor.execute(query)
     data = cursor.fetchall()
-    result_data = []
-    for mrt in data:
-        result_data.append(mrt["mrt_name"])
+    result_data = list(map(lambda mrt:mrt["mrt_name"],data))
     return {"data":result_data}
-
-
-
