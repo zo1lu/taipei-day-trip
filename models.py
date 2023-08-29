@@ -10,29 +10,35 @@ DB_CONFIG = {
 
 def get_attractions_by_page(page,keyword):
     con = mysql.connect(**DB_CONFIG)
-    cursor = con.cursor(dictionary=True)
-    if keyword!=None:
-        query = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %s or site.name like %s"
-        cursor.execute(query,(keyword,'%{}%'.format(keyword)))
-    else:
-        query="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id"
-        cursor.execute(query)
-    data = cursor.fetchall()
-
-    filterd_data_size = len(data)
-    
-    #get full site data of the page
-    result_data = []
+    cursor_data = con.cursor(dictionary=True,buffered=True)
+    cursor_data_count = con.cursor(dictionary=True,buffered=True)
     i = page*12
-    while i < filterd_data_size:
-        site_data = data[i]
-        result_data.append(get_attraction_full_data(site_data))
-        i+=1
+    if keyword!=None:
+        query_data = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %s OR site.name like %s LIMIT %s,12"
+        cursor_data.execute(query_data,(keyword,'%{}%'.format(keyword),i))
 
-    return {
-			"nextPage":page+1 if filterd_data_size>(page+1)*12 else None,
+        query_data_count = "SELECT COUNT(*) as size FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %s OR site.name like %s"
+        cursor_data_count.execute(query_data_count,(keyword,'%{}%'.format(keyword)))
+    else:
+        query_data="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id LIMIT %s,12"
+        cursor_data.execute(query_data,(i,))
+
+        query_data_count = "SELECT COUNT(*) as size FROM attractions"
+        cursor_data_count.execute(query_data_count)
+
+    data = cursor_data.fetchall()
+    count = cursor_data_count.fetchone()
+
+    data_size = count["size"]
+
+    #get full site data of the page
+    result_data = list(map(get_attraction_full_data,data))
+
+    return {    
+			"nextPage":page+1 if data_size>(page+1)*12 else None,
 			"data":result_data
 		}
+
 
 def get_attraction_full_data(site_data):
     id = site_data["id"]
@@ -43,8 +49,8 @@ def get_image_url_list(id):
     cursor = con.cursor(dictionary=True)
     query = "SELECT image_url FROM images WHERE attraction_id = %s"
     cursor.execute(query,(id,))
-    list = cursor.fetchall()  
-    img_url_list = list(map(lambda url:url["image_url"],list))
+    url_list = cursor.fetchall()  
+    img_url_list = list(map(lambda url:url["image_url"],url_list))
     return img_url_list
 
 def get_attraction_by_id(id):
@@ -71,3 +77,5 @@ def get_mrts():
     data = cursor.fetchall()
     result_data = list(map(lambda mrt:mrt["mrt_name"],data))
     return {"data":result_data}
+
+get_attractions_by_page(4,None)
