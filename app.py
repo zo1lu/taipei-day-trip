@@ -32,7 +32,7 @@ def get_attractions_by_page_api():
 			"error": True,
 			"message": "請按照情境提供對應的錯誤訊息"}),500
 
-@app.route("/api/attractions/<attractionId>")
+@app.route("/api/attraction/<attractionId>")
 def get_attraction_by_id_api(attractionId):
 	try:
 		data = get_attraction_by_id(attractionId)
