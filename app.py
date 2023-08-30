@@ -1,8 +1,8 @@
 from flask import *
 from models import get_attractions_by_page,get_attraction_by_id,get_mrts
 app=Flask(__name__)
-app.config["JSON_AS_ASCII"]=False
 app.config["TEMPLATES_AUTO_RELOAD"]=True
+app.json.ensure_ascii = False
 
 # Pages
 @app.route("/")
@@ -26,18 +26,20 @@ def get_attractions_by_page_api():
 	try:
 		data = get_attractions_by_page(page,keyword)
 		return jsonify(data),200
-	except:
+	except Exception as e:
+		print(e)
 		return jsonify({
 			"error": True,
 			"message": "請按照情境提供對應的錯誤訊息"}),500
 
-@app.route("/api/attractions/<int:attractionId>")
+@app.route("/api/attractions/<attractionId>")
 def get_attraction_by_id_api(attractionId):
 	try:
 		data = get_attraction_by_id(attractionId)
 		status_code = 400 if data.get("error") else 200
 		return jsonify(data),status_code
-	except:
+	except Exception as e:
+		print(e)
 		return jsonify({
 			"error": True,
 			"message": "請按照情境提供對應的錯誤訊息"}),500
@@ -47,7 +49,8 @@ def get_mrts_api():
 	try:
 		data = get_mrts()
 		return jsonify(data),200
-	except:
+	except Exception as e:
+		print(e)
 		return jsonify({
 			"error": True,
 			"message": "請按照情境提供對應的錯誤訊息"}),500
