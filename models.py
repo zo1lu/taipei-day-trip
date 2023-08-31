@@ -16,7 +16,7 @@ def get_attractions_by_page(page,keyword):
     data_per_page = 12
 
     if keyword!=None:
-        query_data = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %(precise_key)s OR site.name like %(fuzzy_key)s ORDER BY site.id LIMIT %(data_per_page)s OFFSET %(start_index)s"
+        query_data = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng, GROUP_CONCAT(images.image_url) as images FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id JOIN images ON site.id = images.attraction_id WHERE mrts.mrt_name like %(precise_key)s OR site.name like %(fuzzy_key)s GROUP BY site.id ORDER BY site.id LIMIT %(data_per_page)s OFFSET %(start_index)s"
         parameter = {
             "precise_key":keyword,
             "fuzzy_key":"%{}%".format(keyword),
@@ -25,7 +25,7 @@ def get_attractions_by_page(page,keyword):
         }
         cursor_data.execute(query_data,parameter)
     else:
-        query_data="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id ORDER BY site.id LIMIT %(data_per_page)s OFFSET %(start_index)s"
+        query_data="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng, GROUP_CONCAT(images.image_url) as images FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id JOIN images ON site.id = images.attraction_id GROUP BY site.id ORDER BY site.id LIMIT %(data_per_page)s OFFSET %(start_index)s"
         parameter = {
             "data_per_page":data_per_page,
             "start_index":i
@@ -33,10 +33,10 @@ def get_attractions_by_page(page,keyword):
         cursor_data.execute(query_data,parameter)
 
     data = cursor_data.fetchall()
+    result_data = list(map(lambda site:{**site,"images":site["images"].split(",")},data))
 
     data_size = get_attractions_count(keyword)
-    #get full site data of the page
-    result_data = list(map(get_attraction_full_data,data))
+
     return {    
             "nextPage":int(page)+1 if data_size>(int(page)+1)*12 else None,
             "data":result_data
@@ -59,19 +59,6 @@ def get_attractions_count(keyword):
     count = cursor_data_count.fetchone()
     data_size = count["size"]
     return data_size
-
-def get_attraction_full_data(site_data):
-    id = site_data["id"]
-    return {**site_data, "images":get_image_url_list(id)}
-
-def get_image_url_list(id):
-    con = mysql.connect(**DB_CONFIG)
-    cursor = con.cursor(dictionary=True)
-    query = "SELECT image_url FROM images WHERE attraction_id = %s"
-    cursor.execute(query,(id,))
-    url_list = cursor.fetchall()  
-    img_url_list = list(map(lambda url:url["image_url"],url_list))
-    return img_url_list
 
 def get_attraction_by_id(id):
     try:
