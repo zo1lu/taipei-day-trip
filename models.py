@@ -13,22 +13,22 @@ def get_attractions_by_page(page,keyword):
     con = mysql.connect(**DB_CONFIG)
     cursor_data = con.cursor(dictionary=True)
     i = int(page)*12
-    limit = 12
+    data_per_page = 12
 
     if keyword!=None:
-        query_data = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %(precise_key)s OR site.name like %(fuzzy_key)s ORDER BY site.id LIMIT %(limit)s OFFSET %(start_index)s"
+        query_data = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %(precise_key)s OR site.name like %(fuzzy_key)s ORDER BY site.id LIMIT %(data_per_page)s OFFSET %(start_index)s"
         parameter = {
-            'precise_key':keyword,
-            'fuzzy_key':'%{}%'.format(keyword),
-            'limit':limit,
-            'start_index':i
+            "precise_key":keyword,
+            "fuzzy_key":"%{}%".format(keyword),
+            "data_per_page":data_per_page,
+            "start_index":i
         }
         cursor_data.execute(query_data,parameter)
     else:
-        query_data="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id ORDER BY site.id LIMIT %(limit)s OFFSET %(start_index)s"
+        query_data="SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt, site.latitude as lat, site.longitude as lng FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id ORDER BY site.id LIMIT %(data_per_page)s OFFSET %(start_index)s"
         parameter = {
-            'limit':limit,
-            'start_index':i
+            "data_per_page":data_per_page,
+            "start_index":i
         }
         cursor_data.execute(query_data,parameter)
 
@@ -46,8 +46,12 @@ def get_attractions_count(keyword):
     con = mysql.connect(**DB_CONFIG)
     cursor_data_count = con.cursor(dictionary=True)
     if keyword!=None:
-        query_data_count = "SELECT COUNT(*) as size FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %s OR site.name like %s"
-        cursor_data_count.execute(query_data_count,(keyword,'%{}%'.format(keyword)))
+        query_data_count = "SELECT COUNT(*) as size FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id WHERE mrts.mrt_name like %(precise_key)s OR site.name like %(fuzzy_key)s"
+        parameter = {
+            "precise_key":keyword,
+            "fuzzy_key":"%{}%".format(keyword)
+        }
+        cursor_data_count.execute(query_data_count,parameter)
     else:
         query_data_count = "SELECT COUNT(*) as size FROM attractions"
         cursor_data_count.execute(query_data_count)
