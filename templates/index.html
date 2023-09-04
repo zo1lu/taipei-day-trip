@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/styles.css" >
+    <script src="../public/script.js" defer></script>
+    <title>台北一日遊</title>
+</head>
+<body>
+    <div class="header">
+        <div class="head">
+            <div class="head__title">台北一日遊</div>
+            <div class="navbar">
+                <a class="navbar__link">預定行程</a>
+                <a class="navbar__link">登入/註冊</a>
+            </div>
+        </div>
+    </div>
+    <div class="hero">
+        <div class="hero__slogan">
+            <h1 class="slogan__title">輕鬆享受台北一日悠閒</h1>
+            <h2 class="slogan__subtitle">探索每個角落，體驗城市的深度旅遊行程</h2>
+            <form class="slogan__search">
+                <input class="search__input" id="search_input" type="text" name="keyword" placeholder="輸入景點名稱查詢"/>
+                <button class="search__button" type="submit">
+                    <img class="search__icon" src="../public/icon/icon-search.png"/>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="main">
+        <div class="mrts-list">
+            <div class="mrts-list__left-container">
+                <div class="mrts-list__controller" onclick="moveLeft()"></div>
+            </div>
+            <div class="mrts-list__container">
+                <div class="mrts-list__wrapper" id="mrts_list_wrapper"></div>
+            </div>
+            <div class="mrts-list__right-container">
+                <div class="mrts-list__controller" onclick="moveRight()"></div>
+            </div>
+        </div>
+        <div class="attractions-list" id="attractions_list_container">
+        </div>
+    </div>
+    <div class="footer">
+        <p class="footer__copyright">COPYRIGHT © 2021 台北一日遊</p>
+    </div>
+</body>
+</html>
