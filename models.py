@@ -64,11 +64,12 @@ def get_attraction_by_id(id):
     try:
         con = mysql.connect(**DB_CONFIG)
         cursor = con.cursor(dictionary=True)
-        query = "SELECT * FROM attractions WHERE id = %s"
+        query = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt,  site.latitude as lat, site.longitude as lng, GROUP_CONCAT(images.image_url) as images FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id JOIN images ON site.id = images.attraction_id WHERE site.id = %s GROUP BY site.id "
         cursor.execute(query, (id,))
-        attraction = cursor.fetchone()
+        attraction_data = cursor.fetchone()
+        result_data = {**attraction_data, "images":attraction_data["images"].split(",") }
         return ({
-            "data":{**attraction,"images":get_image_url_list(id)}
+            "data":result_data
         })
     except Exception as e:
         print(e)
@@ -80,8 +81,11 @@ def get_attraction_by_id(id):
 def get_mrts():
     con = mysql.connect(**DB_CONFIG)
     cursor = con.cursor(dictionary=True)
-    query = "SELECT mrt_name FROM mrts INNER JOIN attractions as site ON site.mrt_id = mrts.id GROUP BY mrts.id ORDER BY COUNT(site.name) DESC LIMIT 40"
+    query = "SELECT mrt_name FROM mrts JOIN attractions as site ON site.mrt_id = mrts.id GROUP BY mrts.id ORDER BY COUNT(site.name) DESC LIMIT 40"
     cursor.execute(query)
     data = cursor.fetchall()
     result_data = list(map(lambda mrt:mrt["mrt_name"],data))
     return {"data":result_data}
+
+# get_attraction_by_id(1)
+# get_mrts();
