@@ -20,17 +20,17 @@ body {
   background-color: #FFF;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
 }
 .header .head {
   width: 1200px;
   display: flex;
-  padding: 10px 0px;
+  padding: 10px 10px;
   justify-content: space-between;
 }
 @media only screen and (max-width: 1200px) {
   .header .head {
-    width: 90%;
+    width: 100%;
   }
 }
 .header .head .head__title {
@@ -39,6 +39,7 @@ body {
   font-style: normal;
   font-weight: 700;
   line-height: 34px;
+  text-decoration: none;
 }
 .header .head .navbar {
   display: flex;
@@ -50,7 +51,7 @@ body {
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
-  line-height: 13.3px;
+  line-height: 14px;
 }
 
 .hero {
@@ -66,7 +67,7 @@ body {
 }
 @media only screen and (max-width: 1200px) {
   .hero {
-    background-position: center;
+    background-position: left;
   }
 }
 .hero .hero__slogan {
@@ -80,7 +81,8 @@ body {
 }
 @media only screen and (max-width: 1200px) {
   .hero .hero__slogan {
-    width: 90%;
+    width: 100%;
+    padding: 15px;
   }
 }
 .hero .hero__slogan .slogan__title {
@@ -123,6 +125,16 @@ body {
   border: none;
   padding: 15px;
   border-radius: 5px 0 0 5px;
+  box-shadow: 0px 0px 20px 0px #AABBCC;
+  color: #757575;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 13.3px;
+}
+.hero .hero__slogan .slogan__search .search__input:focus {
+  color: #000;
+  outline: none;
 }
 .hero .hero__slogan .slogan__search .search__button {
   width: 60px;
@@ -155,7 +167,7 @@ body {
 }
 @media only screen and (max-width: 1200px) {
   .main .mrts-list {
-    width: 90%;
+    width: 100%;
   }
 }
 .main .mrts-list .mrts-list__left-container {
@@ -220,7 +232,8 @@ body {
 }
 .main .attractions-list {
   width: 1200px;
-  min-height: 786px;
+  min-height: 500px;
+  height: 100%;
   display: grid;
   padding: 15px;
   grid-gap: 30px;
@@ -228,7 +241,7 @@ body {
 }
 @media only screen and (max-width: 1200px) {
   .main .attractions-list {
-    width: 90%;
+    width: 100%;
   }
 }
 @media only screen and (max-width: 1000px) {
@@ -238,27 +251,39 @@ body {
 }
 @media only screen and (max-width: 600px) {
   .main .attractions-list {
-    width: 90%;
     grid-template-columns: repeat(1, 1fr);
   }
 }
+.main .attractions-list .attraction__message {
+  grid-column: 1/-1;
+}
+.main .attractions-list .attraction__message .attraction__error {
+  text-align: center;
+}
 .main .attractions-list .attraction__card {
   width: 100%;
-  min-height: 250px;
+  height: 242px;
   border-radius: 5px;
   border: 1px solid #E8E8E8;
   background: #FFF;
+  z-index: 1;
+}
+@media only screen and (max-width: 1000px) {
+  .main .attractions-list .attraction__card {
+    height: 325px;
+  }
 }
 @media only screen and (max-width: 600px) {
   .main .attractions-list .attraction__card {
-    min-height: 300px;
+    min-width: 321px;
+    height: 280px;
   }
 }
 .main .attractions-list .attraction__card .attraction__link {
   display: block;
   position: relative;
   width: auto;
-  height: 200px;
+  height: 197px;
   background-size: cover;
   border-radius: 5px 5px 0 0;
 }
@@ -272,7 +297,7 @@ body {
 }
 @media only screen and (max-width: 600px) {
   .main .attractions-list .attraction__card .attraction__link {
-    height: 280px;
+    height: 235px;
   }
 }
 .main .attractions-list .attraction__card .attraction__name {
@@ -283,8 +308,11 @@ body {
   position: absolute;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   color: #FFF;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: 20px;
@@ -300,7 +328,7 @@ body {
   text-align: left;
   vertical-align: middle;
   color: #757575;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 25px;
@@ -310,7 +338,7 @@ body {
   text-align: right;
   vertical-align: middle;
   color: #757575;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 25px;
@@ -326,9 +354,10 @@ body {
   align-items: center;
 }
 .footer .footer__copyright {
+  margin: 5px 0;
   color: #FFF;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
-  line-height: 13.3px;
+  line-height: 14px;
 }/*# sourceMappingURL=styles.css.map */
