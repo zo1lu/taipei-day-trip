@@ -1,9 +1,11 @@
+let nextPageNum = 0;
+let currentKeyword = "";
+
 async function getMrtsList(){
     url="http://127.0.0.1:3000/api/mrts"
     try{
         const response = await fetch(url);
         const mrts = await response.json();
-        console.log(mrts.data)
         return mrts.data
     }catch(e){
         console.log(e)
@@ -15,21 +17,28 @@ async function getAttractionsbyPage(pageNumber,keyword){
     try{
         const response = await fetch(url);
         const attractions = await response.json();
-        console.log(attractions.data)
-        return attractions.data
+        return attractions
     }
     catch(e){
         console.log(e)
     }
-    
 }
 
-// getAttractionsbyPage(0)
-// getMrtsList()
-
-async function createAttractionsList(){
+async function addAttractionCards(pageNum,keyword){
     const attractionsListContainer = document.getElementById("attractions_list_container")
-    const attractionsData = await getAttractionsbyPage(0,"")
+    const fetchedData = await getAttractionsbyPage(pageNum,keyword)
+    const attractionsData = fetchedData.data
+    const nextPage = fetchedData.nextPage
+
+    if (attractionsData.length == 0){
+        const errorMessageContainer = document.createElement("div");
+        errorMessageContainer.className = "attraction__message";
+        const errorMessage = document.createElement("p");
+        errorMessage.className = "attraction__error";
+        errorMessage.innerText = "查無資料"
+        errorMessageContainer.appendChild(errorMessage)
+        attractionsListContainer.appendChild(errorMessageContainer)
+    }
     attractionsData.forEach(attraction=>{
         const imageUrl = attraction.images[0].replace(/["]/g, '');
         const attractionCard = document.createElement("div");
@@ -58,9 +67,10 @@ async function createAttractionsList(){
         attractionCard.appendChild(attractionLink);
         attractionCard.appendChild(attractionInfo);
         attractionsListContainer.appendChild(attractionCard);
-
     })
 
+    nextPageNum = nextPage
+    currentKeyword = keyword
 }
 async function createMrtsList(){
     const mrtsListWrapper = document.getElementById("mrts_list_wrapper");
@@ -69,25 +79,78 @@ async function createMrtsList(){
     mrtData.forEach(mrt => {
         const mrt_link = document.createElement("a")
         mrt_link.addEventListener("click",()=>{
-            searchInput.setAttribute("value",mrt)
-            // serchbymrtname
+            searchInput.value = mrt
+            // serch by mrt name
+            searchByKeyword()
         })
         mrt_link.className = "mrts-list__link"
         mrt_link.innerText = mrt
         mrtsListWrapper.appendChild(mrt_link)
     });
 }
-createMrtsList()
-createAttractionsList()
+
+function firstLoad(){
+    const attractionsListContainer = document.getElementById("attractions_list_container");
+    attractionsListContainer.textContent = "";
+    addAttractionCards(0,"")
+    .then(()=>{
+        buildObserve(observer)
+    })
+    .catch((e)=>{
+        console.log(e)
+    })
+    
+}
+
+function searchByKeyword(){
+    const attractionsListContainer = document.getElementById("attractions_list_container");
+    const key = document.getElementById("search_input").value;
+    attractionsListContainer.textContent = "";
+    addAttractionCards(0,key)
+    .then(()=>{
+        buildObserve(observer)
+    })
+    .catch((e)=>{
+        console.log(e)
+    })
+}
+
+const callback = (entries)=>{
+    if(entries[0].isIntersecting){
+        if (nextPageNum) {
+            addAttractionCards(nextPageNum,currentKeyword)
+            .then(()=>{
+                const cards = document.getElementById("attractions_list_container").children
+                const target = cards.item(cards.length-1)
+                observer.unobserve(entries[0].target);
+                observer.observe(target);
+            })
+            .catch((e)=>{console.log(e)})
+        }else{
+            observer.disconnect();
+        }
+    }
+}
+const observer = new IntersectionObserver(callback);
+
+const buildObserve = (_observer)=>{
+    const cards = document.getElementById("attractions_list_container").children
+    const count = document.getElementById("attractions_list_container").childElementCount
+    const target = cards.item(count-1)
+    _observer.observe(target)
+}
 
 function moveRight(){
     const container = document.getElementById("mrts_list_wrapper");
     const width = container.offsetWidth - 50;
-    container.scrollLeft+=width;
+    container.scrollLeft += width;
 }
 
 function moveLeft(){
     const container = document.getElementById("mrts_list_wrapper");
     const width = container.offsetWidth - 50;
-    container.scrollLeft-=width;
+    container.scrollLeft -= width;
 }
+
+createMrtsList()
+firstLoad()
