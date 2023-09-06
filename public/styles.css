@@ -243,6 +243,7 @@ body::-webkit-scrollbar {
   padding: 15px;
   grid-gap: 30px;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(auto-fill, 240px);
 }
 @media only screen and (max-width: 1200px) {
   .main .attractions-list {
@@ -252,11 +253,14 @@ body::-webkit-scrollbar {
 @media only screen and (max-width: 1000px) {
   .main .attractions-list {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto-fill, 325px);
+    grid-gap: 15px;
   }
 }
 @media only screen and (max-width: 600px) {
   .main .attractions-list {
     grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(auto-fill, 280px);
   }
 }
 .main .attractions-list .attraction__message {
