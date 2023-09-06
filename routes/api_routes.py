@@ -28,7 +28,7 @@ def get_attraction_by_id_api(attractionId):
 	try:
 		data = get_attraction_by_id(attractionId)
 		status_code = 400 if data.get("error") else 200
-		res = make_response(jsonify(data),status_code,status_code)
+		res = make_response(jsonify(data),status_code,header)
 		return res
 	except Exception as e:
 		print(e)
