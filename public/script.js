@@ -2,7 +2,7 @@ let nextPageNum = 0;
 let currentKeyword = "";
 
 async function getMrtsList(){
-    url="http://127.0.0.1:3000/api/mrts"
+    url="/api/mrts"
     try{
         const response = await fetch(url);
         const mrts = await response.json();
@@ -13,7 +13,7 @@ async function getMrtsList(){
     
 }
 async function getAttractionsbyPage(pageNumber,keyword){
-    url = `http://127.0.0.1:3000/api/attractions?page=${pageNumber}&keyword=${keyword}`;
+    url = `/api/attractions?page=${pageNumber}&keyword=${keyword}`;
     try{
         const response = await fetch(url);
         const attractions = await response.json();
