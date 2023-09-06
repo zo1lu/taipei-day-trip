@@ -62,7 +62,7 @@ body::-webkit-scrollbar {
 .hero {
   width: 100vw;
   height: 320px;
-  background-image: url("../public/images/welcom.png");
+  background-image: url("/images/welcom.png");
   background-size: cover;
   background-position: top;
   background-repeat: no-repeat;
@@ -183,7 +183,7 @@ body::-webkit-scrollbar {
 .main .mrts-list .mrts-list__left-container .mrts-list__controller {
   width: 32px;
   height: 32px;
-  background-image: url("../public/icon/arrow-left.png");
+  background-image: url("/icon/arrow-left.png");
   background-size: cover;
 }
 .main .mrts-list .mrts-list__left-container .mrts-list__controller:hover {
@@ -197,7 +197,7 @@ body::-webkit-scrollbar {
 .main .mrts-list .mrts-list__right-container .mrts-list__controller {
   width: 32px;
   height: 32px;
-  background-image: url("../public/icon/arrow-right.png");
+  background-image: url("/icon/arrow-right.png");
   background-size: cover;
 }
 .main .mrts-list .mrts-list__right-container .mrts-list__controller:hover {
