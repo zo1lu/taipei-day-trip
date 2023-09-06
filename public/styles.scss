@@ -17,13 +17,18 @@ $secondary-color-gray-10 : #F8F8F8;
 
 $Black:#000;
 $White:#FFF;
-$Blue-Gray: #AABBCC; 
+$Blue-Gray: #AABBCC;
 $Dark-Cyan-Gradient:linear-gradient(0,#337788,#66AABB);
 $Light-Cyan-Gradient:lineat-gradient(135,#AADDEE,#66AABB);
 
 body{
     width:100vw;
     overflow-x: hidden;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    &::-webkit-scrollbar { 
+        display: none;  /* Safari and Chrome */
+    }
 };
 // header
 .header{
@@ -262,7 +267,7 @@ body{
         }
         .attraction__card{
             width:100%;
-            height: 242px;
+            height: 240px;
             border-radius: 5px;
             border: 1px solid $secondary-color-gray-20;
             background: $White;
@@ -271,7 +276,7 @@ body{
                 height: 325px;
             };
             @media only screen and (max-width:600px) {
-                min-width: 321px;
+                min-width: 320px;
                 height: 280px;
             };
             .attraction__link{
@@ -317,6 +322,9 @@ body{
                     width:50%;
                     text-align: left;
                     vertical-align: middle;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
                     color:$secondary-color-gray-50;
                     font-size: 16px;
                     font-style: normal;
