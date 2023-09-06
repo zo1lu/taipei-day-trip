@@ -237,7 +237,7 @@ body::-webkit-scrollbar {
 }
 .main .attractions-list {
   width: 1200px;
-  min-height: 500px;
+  min-height: calc(100vh - 628px);
   height: 100%;
   display: grid;
   padding: 15px;
