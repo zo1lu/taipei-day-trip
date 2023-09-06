@@ -37,7 +37,6 @@ def get_attractions_without_keyword(start_index, data_num):
     return data
 
 def get_attractions_by_page(page,keyword):
-
     if keyword!=None:
         data = get_attactions_with_keyword(keyword,int(page)*12,12)
         #check next page data existance
@@ -45,7 +44,7 @@ def get_attractions_by_page(page,keyword):
     else:
         data = get_attractions_without_keyword(int(page)*12,12)
         #check next page data existance
-        next_page_data = get_attactions_with_keyword((int(page)+1)*12,1)
+        next_page_data = get_attractions_without_keyword((int(page)+1)*12,1)
 
     result_data = list(map(lambda site:{**site,"images":site["images"].split(",")},data))
 
