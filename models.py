@@ -1,12 +1,14 @@
 import mysql.connector as mysql
 from flask import *
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 #Configuration for MySQL database
 DB_CONFIG = {
-    'user': 'root',
-    'password': 'admin',
-    'host': '127.0.0.1',
-    'database':'taipeitripweb'
+    'user': os.getenv("DBUSER"),
+    'password': os.getenv("DBPASSWORD"),
+    'host': os.getenv("DBHOST"),
+    'database': os.getenv("DBDATABASE")
 }
 def get_attactions_with_keyword(keyword, start_index, data_num):
     con = mysql.connect(**DB_CONFIG)
