@@ -218,7 +218,8 @@ body{
                 overflow-y:hidden;
                 overflow-x: scroll;
                 display: flex;
-                transition: all 500ms ease-out;
+                transition: scroll 500ms ease-out;
+                scroll-behavior: smooth;
                 -ms-overflow-style: none;  
                 /* IE and Edge */
                 scrollbar-width: none;  
