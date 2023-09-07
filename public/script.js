@@ -130,7 +130,7 @@ const callback = (entries)=>{
         }
     }
 }
-const observer = new IntersectionObserver(callback);
+const observer = new IntersectionObserver(callback,{ threshold: 1.0 });
 
 const buildObserve = (_observer)=>{
     const cards = document.getElementById("attractions_list_container").children
