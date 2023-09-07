@@ -38,37 +38,37 @@ async function addAttractionCards(pageNum,keyword){
         errorMessage.innerText = "查無資料"
         errorMessageContainer.appendChild(errorMessage)
         attractionsListContainer.appendChild(errorMessageContainer)
+    }else{
+        attractionsData.forEach(attraction=>{
+            const imageUrl = attraction.images[0].replace(/["]/g, '');
+            const attractionCard = document.createElement("div");
+            attractionCard.className = "attraction__card";
+            const attractionLink = document.createElement("a");
+            attractionLink.className = "attraction__link";
+            attractionLink.style.cssText = `background-image:url(${imageUrl})`;
+            const attractionName = document.createElement("p");
+            attractionName.className = "attraction__name";
+            attractionName.innerText = attraction.name;
+            attractionLink.appendChild(attractionName);
+    
+            const attractionInfo = document.createElement("div");
+            attractionInfo.className = "attraction__info";
+    
+            const attractionMrt = document.createElement("p");
+            attractionMrt.className = "attraction__mrt";
+            attractionMrt.innerText = attraction.mrt || ""
+    
+            const attractionCategory = document.createElement("p");
+            attractionCategory.className = "attraction__category";
+            attractionCategory.innerText = attraction.category;
+    
+            attractionInfo.appendChild(attractionMrt);
+            attractionInfo.appendChild(attractionCategory);
+            attractionCard.appendChild(attractionLink);
+            attractionCard.appendChild(attractionInfo);
+            attractionsListContainer.appendChild(attractionCard);
+        })
     }
-    attractionsData.forEach(attraction=>{
-        const imageUrl = attraction.images[0].replace(/["]/g, '');
-        const attractionCard = document.createElement("div");
-        attractionCard.className = "attraction__card";
-        const attractionLink = document.createElement("a");
-        attractionLink.className = "attraction__link";
-        attractionLink.style.cssText = `background-image:url(${imageUrl})`;
-        const attractionName = document.createElement("p");
-        attractionName.className = "attraction__name";
-        attractionName.innerText = attraction.name;
-        attractionLink.appendChild(attractionName);
-
-        const attractionInfo = document.createElement("div");
-        attractionInfo.className = "attraction__info";
-
-        const attractionMrt = document.createElement("p");
-        attractionMrt.className = "attraction__mrt";
-        attractionMrt.innerText = attraction.mrt || ""
-
-        const attractionCategory = document.createElement("p");
-        attractionCategory.className = "attraction__category";
-        attractionCategory.innerText = attraction.category;
-
-        attractionInfo.appendChild(attractionMrt);
-        attractionInfo.appendChild(attractionCategory);
-        attractionCard.appendChild(attractionLink);
-        attractionCard.appendChild(attractionInfo);
-        attractionsListContainer.appendChild(attractionCard);
-    })
-
     nextPageNum = nextPage
     currentKeyword = keyword
 }
@@ -116,18 +116,17 @@ function searchByKeyword(){
 }
 
 const callback = (entries)=>{
-    if(entries[0].isIntersecting){
+    if(entries[0].isIntersecting && Math.floor(entries[0].intersectionRatio) === 1){
+        observer.disconnect();
         if (nextPageNum) {
+            observer.unobserve(entries[0].target)
             addAttractionCards(nextPageNum,currentKeyword)
             .then(()=>{
                 const cards = document.getElementById("attractions_list_container").children
                 const target = cards.item(cards.length-1)
-                observer.unobserve(entries[0].target);
                 observer.observe(target);
             })
             .catch((e)=>{console.log(e)})
-        }else{
-            observer.disconnect();
         }
     }
 }
