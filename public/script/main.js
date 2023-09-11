@@ -46,6 +46,7 @@ async function addAttractionCards(pageNum,keyword){
             const attractionLink = document.createElement("a");
             attractionLink.className = "attraction__link";
             attractionLink.style.cssText = `background-image:url(${imageUrl})`;
+            attractionLink.href = `./attraction/${attraction.id}`
             const attractionName = document.createElement("p");
             attractionName.className = "attraction__name";
             attractionName.innerText = attraction.name;
@@ -151,5 +152,8 @@ function moveLeft(){
     container.scrollLeft -= width;
 }
 
+
 createMrtsList()
 firstLoad()
+
+
