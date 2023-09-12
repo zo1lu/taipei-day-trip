@@ -4,6 +4,9 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Noto Sans TC', sans-serif;
+    &:focus{
+        outline: none;
+    }
 }
 
 $primary-color-cyan-70 : #489;
@@ -23,6 +26,9 @@ $Light-Cyan-Gradient:lineat-gradient(135,#AADDEE,#66AABB);
 
 body{
     width:100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     overflow-x: hidden;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
@@ -47,8 +53,11 @@ body{
         padding: 10px 10px;
         justify-content: space-between;
         @media only screen and (max-width:1200px) {
+            width:80%;
+        };
+        @media only screen and (max-width:600px) {
             width:100%;
-        }
+        };
         .head__title{
             color:$primary-color-cyan-70;
             font-size: 30px;
@@ -96,8 +105,11 @@ body{
         align-items: flex-start;
         gap: 10px;
         @media only screen and (max-width:1200px) {
-            width:100%;
+            width:80%;
             padding: 15px;
+        };
+        @media only screen and (max-width:600px) {
+            width:100%;
         }
         .slogan__title{
             height:41px;
@@ -121,13 +133,12 @@ body{
             width: 460px;
             height: 46px;
             align-items: center;
-            flex-shrink: 0;
             @media only screen and (max-width:1200px) {
                 width:360px;
-            }
+            };
             @media only screen and (max-width:600px) {
                 width:285px;
-            }
+            };
             .search__input{
                 width:400px;
                 height: 100%;
@@ -143,7 +154,13 @@ body{
                 &:focus{
                     color: $Black;
                     outline: none;
-                }
+                };
+                @media only screen and (max-width:1200px) {
+                    width:300px;
+                };
+                @media only screen and (max-width:600px) {
+                    width:225px;
+                };
             };
             .search__button{
                 width:60px;
@@ -177,8 +194,11 @@ body{
         display: flex;
         justify-content: space-between;
         @media only screen and (max-width:1200px) {
+            width:80%;
+        };
+        @media only screen and (max-width:600px) {
             width:100%;
-        }
+        };
         .mrts-list__left-container{
             width:47px;
             height: 50px;
@@ -253,9 +273,7 @@ body{
         grid-template-columns: repeat(4,1fr);
         grid-template-rows: repeat(auto-fill, 240px);
         @media only screen and (max-width:1200px) {
-            width:100%;
-        };
-        @media only screen and (max-width:1000px) {
+            width:80%;
             grid-template-columns: repeat(2,1fr);
             grid-template-rows: repeat(auto-fill, 325px);
             grid-gap: 15px;
@@ -263,6 +281,7 @@ body{
         @media only screen and (max-width:600px) {
             grid-template-columns: repeat(1,1fr);
             grid-template-rows: repeat(auto-fill, 280px);
+            width:100%;
         };
         .attraction__message{
             grid-column: 1/-1;
@@ -277,7 +296,7 @@ body{
             border: 1px solid $secondary-color-gray-20;
             background: $White;
             z-index: 1;
-            @media only screen and (max-width:1000px) {
+            @media only screen and (max-width:1200px) {
                 height: 325px;
             };
             @media only screen and (max-width:600px) {
@@ -288,13 +307,13 @@ body{
                 display: block;
                 position: relative;
                 width:auto;
-                height:197px;
+                height:195px;
                 background-size: cover;
                 border-radius: 5px 5px 0 0;
                 &:hover{
                     cursor: pointer;
                 }
-                @media only screen and (max-width:1000px) {
+                @media only screen and (max-width:1200px) {
                     height: 280px;
                 };
                 @media only screen and (max-width:600px) {
@@ -367,5 +386,309 @@ body{
         font-style: normal;
         font-weight: 700;
         line-height: 14px;
+    }
+}
+// attraction page
+.separator{
+    border: 1px solid $secondary-color-gray-20;
+    width:100%;
+};
+
+.main-attraction{
+    gap:40px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    @media only screen and (max-width:1200px){
+        padding-right: 10px;
+        padding-left: 10px;
+        width:80%;
+    };
+    @media only screen and (max-width:600px){
+        width: 100%;
+        padding-top: 0;
+    };
+    // attraction page >> intro
+    .attraction-intro{
+        width: 1200px;
+        height: 400px;
+        display: grid;
+        gap: 30px;
+        padding: 0px 15px;
+        grid-template-columns: 540px 600px;
+        @media only screen and (max-width:1200px) {
+            width:100%;
+            height:auto;
+            padding: 0;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2,1fr);
+        };
+        @media only screen and (max-width:600px){
+            gap:20px;
+            width:100vw;
+        };
+        .attraction-intro__slider{
+            width: 100%;
+            height: 400px;
+            position: relative;
+            background-color: $Blue-Gray;
+            .attraction-intro__images-wrapper{
+                width: 100%;
+                height: 400px;
+                display: flex;
+                // overflow: hidden;
+                position: absolute;
+                transition: all 500ms ease-out;
+
+                .attraction-intro__image-container{
+                    width: 100%;
+                    height: 400px;
+                    object-fit: cover;
+                    display: none;
+                    transition: all 200ms ease-out;
+                    
+                    img{
+                        display: block;
+                        width: 100%;
+                        height:400px;
+                        object-fit: cover;
+                    }
+                    
+                };
+            };
+            .attraction-intro__dots-container{
+                width:100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                bottom: 12px;
+                opacity: 0.75;
+                z-index: 1;
+                .attraction-intro__dot{
+                    background-color: $White;
+                    border-radius: 50%;
+                    width: 12px;
+                    height: 12px;
+                    margin: 0 6px;
+                    border: 1px solid $White;
+                    &:hover{
+                        cursor: pointer;
+                    };
+                };
+                .dot--active{
+                    background-color: $Black;
+                };
+
+            };
+            .attraction-intro__controller-left{
+                height:400px;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                left: 10px;
+                z-index: 1;
+                opacity: 0.75;
+                cursor: pointer;
+                img{
+                    width: 36px;
+                    height: 36px;
+                }
+            };
+            .attraction-intro__controller-right{
+                height:400px;
+                display: flex;
+                align-items: center;
+                position: absolute;
+                right: 10px;
+                z-index: 1;
+                opacity: 0.75;
+                cursor: pointer;
+                img{
+                    width: 36px;
+                    height: 36px;
+                }
+            };
+        }
+        .attraction-intro__intro{
+            width:100%;
+            padding-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            @media only screen and (max-width:600px){
+                padding: 0 10px 8px 10px;
+            }
+            .attraction-intro__name{
+                color: $secondary-color-gray-70;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 33px;
+                vertical-align: middle;
+                margin-bottom: 15px;
+            };
+            .attraction-intro__category-and-mrt{
+                color: $secondary-color-gray-70;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 22px;
+                vertical-align: middle;
+                margin-bottom: 20px;
+            };
+            .attraction-intro__booking{
+                flex-grow: 2;
+                max-height: 100%;
+                background-color:$secondary-color-gray-20;
+                padding: 15px 20px;
+                display: flex;
+                flex-direction: column;
+                gap:15px;
+                border-radius: 5px;
+                .attraction-intro__label{
+                    height: 22px;
+                    color: $secondary-color-gray-70;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 22px;
+                    vertical-align: middle;
+                };
+                .attraction-intro__subtitle{
+                    height:24px;
+                    color: $secondary-color-gray-70;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 24px;
+                    vertical-align: middle;
+                };
+                .attraction-intro__option{
+                    color:$secondary-color-gray-70;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 14px;
+                    vertical-align: middle;
+                };
+                .attraction-intro__date-section{
+                    height:35px;
+                    gap:5px;
+                    display: flex;
+                    align-items: center;
+                    //for safari
+                    input [type= ‘date’ ]  {
+                        &::after{
+                            content: attr(placeholder);
+                        }
+                    } 
+                    .attraction-intro__date{
+                        width:193px;
+                        height:35px;
+                        background-color: $White;
+                        padding: 5px 10px;
+                        border: none;
+                        display: flex;
+                        &:focus{
+                            outline: none;
+                        };
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 500;
+                    };
+                    
+                };
+                .attraction-intro__time{
+                    height:22px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    .attraction-intro__option{
+                        padding: 0 8px 0 5px;
+                        gap: 4px;
+                        display: flex;
+                        align-items: center;
+                        .attraction-intro__radio{
+                            height: 22px;
+                            width: 22px;
+                            border:$White;
+                            accent-color: $primary-color-cyan-70;
+                            appearance: none;
+                            background-color: $White;
+                            border-radius: 50%;
+                            &:checked{
+                                background-color: $primary-color-cyan-70;
+                                border:solid 2px $White;
+                            }
+                        };
+                        .attraction-intro__radio-label{
+                            font-size: 16px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: 14px;
+                        }
+                    }
+                    
+                };
+                .attraction-intro__price{
+                    height:22px;
+                    display: flex;
+                    align-items: center;
+                };
+                .attraction-intro__submit{
+                    height:36px;
+                    width:fit-content;
+                    padding: 10px 20px;
+                    font-size: 19px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 16px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: $primary-color-cyan-70;
+                    color: $White;
+                    margin-top: 10px;
+                };
+                
+            };
+
+        };
+
+    }
+    .separator{
+        border: 1px solid $secondary-color-gray-20;
+        width:1200px;
+        @media only screen and (max-width:1200px){
+            width:100%;
+        };
+    };
+    // attraction page >> info
+    .attraction-info{
+        width: 1200px;
+        min-height: 400px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        @media only screen and (max-width:1200px){
+            width:100%;
+            padding: 0 0 0 10px;
+        };
+        .attraction-info__content{
+            color: $secondary-color-gray-70;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 20px;
+        };
+        .attraction-info__title{
+            color: $secondary-color-gray-70;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 32px;
+        }
     }
 }
