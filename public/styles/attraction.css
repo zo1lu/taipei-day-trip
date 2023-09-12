@@ -1,0 +1,392 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans TC", sans-serif;
+}
+*:focus {
+  outline: none;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  overflow-x: hidden;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+body::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 54px;
+  background-color: #FFF;
+}
+.header .head {
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
+  padding: 10px 10px;
+}
+@media only screen and (max-width: 1200px) {
+  .header .head {
+    width: 80%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .header .head {
+    width: 100%;
+  }
+}
+.header .head .head__title {
+  color: #489;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 34px;
+  text-decoration: none;
+}
+.header .head .navbar {
+  display: flex;
+  align-items: center;
+}
+.header .head .navbar .navbar__link {
+  height: 34px;
+  padding: 10px;
+  color: #489;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.separator {
+  width: 100%;
+  border: 1px solid #E8E8E8;
+}
+
+.main-attraction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  min-height: calc(100vh - 158px);
+  padding: 40px 0;
+}
+@media only screen and (max-width: 1200px) {
+  .main-attraction {
+    width: 80%;
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .main-attraction {
+    width: 100%;
+    padding-top: 0;
+  }
+}
+.main-attraction .attraction-intro {
+  display: grid;
+  grid-template-columns: 540px 600px;
+  gap: 30px;
+  width: 1200px;
+  height: 400px;
+  padding: 0px 15px;
+}
+@media only screen and (max-width: 1200px) {
+  .main-attraction .attraction-intro {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    width: 100%;
+    height: auto;
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .main-attraction .attraction-intro {
+    gap: 20px;
+    width: 100vw;
+  }
+}
+.main-attraction .attraction-intro .attraction-intro__slider {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__images-wrapper {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 400px;
+  transition: all 500ms ease-out;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__images-wrapper .attraction-intro__image-container {
+  display: none;
+  width: 100%;
+  height: 400px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__images-wrapper .attraction-intro__image-container img {
+  display: block;
+  width: 100%;
+  height: 400px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+@media only screen and (max-width: 600px) {
+  .main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__images-wrapper .attraction-intro__image-container img {
+    border-radius: 0;
+  }
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__dots-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 12px;
+  z-index: 1;
+  width: 100%;
+  opacity: 0.75;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__dots-container .attraction-intro__dot {
+  width: 12px;
+  height: 12px;
+  margin: 0 6px;
+  background-color: #FFF;
+  border: 1px solid #FFF;
+  border-radius: 50%;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__dots-container .attraction-intro__dot:hover {
+  cursor: pointer;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__dots-container .dot--active {
+  background-color: #000;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__controller-left, .main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__controller-right {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 10px;
+  z-index: 1;
+  height: 400px;
+  opacity: 0.75;
+  cursor: pointer;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__controller-left img, .main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__controller-right img {
+  width: 36px;
+  height: 36px;
+}
+.main-attraction .attraction-intro .attraction-intro__slider .attraction-intro__controller-right {
+  left: calc(100% - 46px);
+}
+.main-attraction .attraction-intro .attraction-intro__intro {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 8px;
+}
+@media only screen and (max-width: 600px) {
+  .main-attraction .attraction-intro .attraction-intro__intro {
+    padding: 0 10px 8px 10px;
+  }
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__name {
+  vertical-align: middle;
+  margin-bottom: 15px;
+  color: #666;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 33px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__category-and-mrt {
+  vertical-align: middle;
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 100%;
+  padding: 15px 20px;
+  flex-grow: 2;
+  background-color: #E8E8E8;
+  border-radius: 5px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__label {
+  vertical-align: middle;
+  height: 22px;
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 22px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__subtitle {
+  vertical-align: middle;
+  height: 24px;
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 22px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__option {
+  vertical-align: middle;
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__date-section {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 35px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__date-section input [type=date]::after {
+  content: attr(placeholder);
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__date-section .attraction-intro__date {
+  display: flex;
+  width: 193px;
+  height: 35px;
+  padding: 5px 10px;
+  background-color: #FFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 25px;
+  border: none;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__date-section .attraction-intro__date:focus {
+  outline: none;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__time {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__time .attraction-intro__option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px 0 5px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__time .attraction-intro__option .attraction-intro__radio {
+  width: 22px;
+  height: 22px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: #FFF;
+  border: #FFF;
+  border-radius: 50%;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__time .attraction-intro__option .attraction-intro__radio:checked {
+  background-color: #489;
+  border: solid 2px #FFF;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__time .attraction-intro__option .attraction-intro__radio-label {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__price {
+  display: flex;
+  align-items: center;
+  height: 22px;
+}
+.main-attraction .attraction-intro .attraction-intro__intro .attraction-intro__booking .attraction-intro__submit {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 36px;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #489;
+  color: #FFF;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  border: none;
+  border-radius: 5px;
+}
+.main-attraction .separator {
+  border: 1px solid #E8E8E8;
+  width: 1200px;
+}
+@media only screen and (max-width: 1200px) {
+  .main-attraction .separator {
+    width: 100%;
+  }
+}
+.main-attraction .attraction-info {
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  min-height: 400px;
+  padding: 10px;
+}
+@media only screen and (max-width: 1200px) {
+  .main-attraction .attraction-info {
+    width: 100%;
+    padding: 0;
+  }
+}
+.main-attraction .attraction-info .attraction-info__content {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.main-attraction .attraction-info .attraction-info__title {
+  color: #666;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.footer {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  width: 100vw;
+  height: 104px;
+  padding: 40px 0px;
+  background-color: #757575;
+}
+.footer .footer__copyright {
+  margin: 5px 0;
+  color: #FFF;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 14px;
+}/*# sourceMappingURL=attraction.css.map */
