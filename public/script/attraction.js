@@ -11,7 +11,7 @@ function setTourPrice(){
 }
 
 async function getAttractionDataById(id){
-    url = `http://127.0.0.1:3000/api/attraction/${id}`
+    url = `/api/attraction/${id}`
     try{
         const response = await fetch(url);
         const attractionData = await response.json();
@@ -78,6 +78,7 @@ function plusSlide(n){
 }
 
 const id = window.location.pathname.split("/")[2]
+
 addAttractionData(id)
 .then(()=>{
     showSlide(imageIndex)
