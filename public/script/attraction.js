@@ -15,7 +15,6 @@ async function getAttractionDataById(id){
     try{
         const response = await fetch(url);
         const attractionData = await response.json();
-        console.log(attractionData)
         return attractionData["data"]
     }
     catch(e){

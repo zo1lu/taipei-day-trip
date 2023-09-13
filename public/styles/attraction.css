@@ -73,7 +73,7 @@ body::-webkit-scrollbar {
 
 .separator {
   width: 100%;
-  border: 1px solid #E8E8E8;
+  border-top: 1px solid #E8E8E8;
 }
 
 .main-attraction {
@@ -336,7 +336,7 @@ body::-webkit-scrollbar {
   border-radius: 5px;
 }
 .main-attraction .separator {
-  border: 1px solid #E8E8E8;
+  border-top: 1px solid #E8E8E8;
   width: 1200px;
 }
 @media only screen and (max-width: 1200px) {

@@ -70,8 +70,8 @@ body{
 // attraction page
 .separator{
     width:100%;
-    
-    border: 1px solid $secondary-color-gray-20;
+
+    border-top: 1px solid $secondary-color-gray-20;
 };
 
 .main-attraction{
@@ -337,7 +337,7 @@ body{
         };
     };
     .separator{
-        border: 1px solid $secondary-color-gray-20;
+        border-top: 1px solid $secondary-color-gray-20;
         width: 1200px;
         @media only screen and (max-width: 1200px){
             width: 100%;
