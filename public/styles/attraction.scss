@@ -71,6 +71,7 @@ body{
 .separator{
     width:100%;
 
+    border: none;
     border-top: 1px solid $secondary-color-gray-20;
 };
 
@@ -337,6 +338,7 @@ body{
         };
     };
     .separator{
+        border: none;
         border-top: 1px solid $secondary-color-gray-20;
         width: 1200px;
         @media only screen and (max-width: 1200px){
