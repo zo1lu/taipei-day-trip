@@ -57,6 +57,7 @@ def get_attraction_by_id(id):
     try:
         con = mysql.connect(**DB_CONFIG)
         cursor = con.cursor(dictionary=True)
+        cursor.execute("SET SESSION group_concat_max_len = 5000")
         query = "SELECT site.id, site.name, site.category, site.description, site.address, site.transport, mrts.mrt_name as mrt,  site.latitude as lat, site.longitude as lng, GROUP_CONCAT(images.image_url) as images FROM attractions as site LEFT JOIN mrts ON site.mrt_id = mrts.id JOIN images ON site.id = images.attraction_id WHERE site.id = %s GROUP BY site.id "
         cursor.execute(query, (id,))
         attraction_data = cursor.fetchone()
