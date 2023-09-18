@@ -2,6 +2,8 @@ import mysql.connector as mysql
 from flask import *
 import os
 from dotenv import load_dotenv
+import jwt
+from datetime import datetime, timedelta
 load_dotenv()
 #Configuration for MySQL database
 DB_CONFIG = {
@@ -10,6 +12,9 @@ DB_CONFIG = {
     'host': os.getenv("DBHOST"),
     'database': os.getenv("DBDATABASE")
 }
+#secret key for jwt
+key=os.getenv("JWTKEY")
+
 def get_attactions_with_keyword(keyword, start_index, data_num):
     con = mysql.connect(**DB_CONFIG)
     cursor_data = con.cursor(dictionary=True)
@@ -81,3 +86,67 @@ def get_mrts():
     result_data = list(map(lambda mrt:mrt["mrt_name"],data))
     return {"data":result_data}
 
+def validate_email(email):
+    con = mysql.connect(**DB_CONFIG)
+    cursor = con.cursor(dictionary=True)
+    query = "SELECT * FROM users WHERE email=%s"
+    cursor.execute(query,(email,))
+    email_validate = cursor.fetchone()
+    result = False if email_validate else True
+    return result
+
+def create_account(username,password,email):
+    if validate_email(email)==False:
+        return False
+    try:
+        con = mysql.connect(**DB_CONFIG)
+        cursor = con.cursor(dictionary=True)
+        query = "INSERT INTO users (username, password, email) VALUES (%s, %s, %s)"
+        # how to know if creation fail
+        cursor.execute(query,(username, password, email))
+        con.commit()
+        return True
+    except Exception as e:
+        print(e)
+        return False
+    
+
+def validate_membership(email,password):
+    try:
+        con = mysql.connect(**DB_CONFIG)
+        cursor = con.cursor(dictionary=True)
+        query = "SELECT id, username, email FROM users WHERE email=%s and password=%s"
+        cursor.execute(query,(email,password))
+        userdata = cursor.fetchone()
+        return userdata if userdata else False
+    except Exception as e:
+        print(e)
+        return False
+
+def encode_userdata(user_id,username,email):
+    expire_date = datetime.now() + timedelta(days = 7)
+    encoded = jwt.encode({"exp":expire_date, "id":user_id, "name":username, "email":email}, key,algorithm="HS256")
+    return encoded
+
+def decode_token(token):
+    try:
+        decoded = jwt.decode(token, key, algorithms="HS256")
+        exp, id, name, email = decoded.values()
+        user_data = {"id":id, "name":name, "email":email}
+        return user_data
+    except jwt.ExpiredSignatureError as e:
+        print(e)
+        return False
+    except Exception as e:
+        print(e)
+        return False
+
+def create_error_message(message):
+    if message:
+        return {
+			"error": True,
+			"message": message}
+    else:
+        {
+			"error": True,
+			"message": "請按照情境提供對應的錯誤訊息"}
