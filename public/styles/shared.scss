@@ -18,14 +18,14 @@
         margin-top: 80px;
         background-color: $White;
 
-        border-radius: 6px;
+        border-radius: 10px 10px 6px 6px;
         .popup__deco{
             width: 340px;
             height: 10px;
-            background-color: $Dark-Cyan-Gradient;
-            z-index: 10;
-
-            border-radius: 0 6px 6px 0;
+            background:  $Dark-Cyan-Gradient;
+            z-index: 5;
+   
+            border-radius: 6px 6px 0 0;
         };
         .popup__close{
             position:absolute;
@@ -164,11 +164,11 @@
                 height: 34px;
                 padding: 10px;
                 
+                @include link-text;
+                color: $secondary-color-gray-70;
                 &:hover{
                     cursor: pointer;
                 };
-                @include link-text;
-                color: $primary-color-cyan-70;
             };
             .link__logout{
                 display: none;

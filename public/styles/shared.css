@@ -14,14 +14,14 @@
   margin: auto;
   margin-top: 80px;
   background-color: #FFF;
-  border-radius: 6px;
+  border-radius: 10px 10px 6px 6px;
 }
 .popup .login__box .popup__deco, .popup .signup__box .popup__deco {
   width: 340px;
   height: 10px;
-  background-color: linear-gradient(0, #337788, #66AABB);
-  z-index: 10;
-  border-radius: 0 6px 6px 0;
+  background: linear-gradient(270deg, #337788, #66AABB);
+  z-index: 5;
+  border-radius: 6px 6px 0 0;
 }
 .popup .login__box .popup__close, .popup .signup__box .popup__close {
   position: absolute;
@@ -154,7 +154,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 14px;
-  color: #489;
+  color: #666;
 }
 .header .head .navbar .navbar__link:hover {
   cursor: pointer;
