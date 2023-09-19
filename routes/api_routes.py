@@ -47,9 +47,9 @@ def get_mrts_api():
 def create_member():
 	try:
 		data = request.get_json()
-		name = data["name"]
-		email = data["email"]
-		password = data["password"]
+		name = str(data["name"])
+		email = str(data["email"])
+		password = str(data["password"])
 		result = create_account(name, password, email)
 		if result:
 			success_message = {"ok":True}
@@ -75,8 +75,8 @@ def get_member_info():
 def log_in():
 	try:
 		data = request.get_json()
-		email = data["email"]
-		password = data["password"]
+		email = str(data["email"])
+		password = str(data["password"])
 		return_data = validate_membership(email, password)
 		if return_data:
 			user_id, user_name, user_email = return_data.values()
