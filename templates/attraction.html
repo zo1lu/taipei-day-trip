@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/attraction.css" >
+    <link rel="stylesheet" href="/styles/attraction.css">
+    <link rel="stylesheet" href="/styles/shared.css">
+    <script src="/components/loginPopup.js" type="text/javascript" defer></script>
+    <script src="/components/header.js" type="text/javascript" defer></script>
+    <script src="/components/footer.js" type="text/javascript" defer></script>
     <script src="/script/attraction.js"></script>
+    <script src="/script/authenticate.js" defer></script>
     <title>景點介紹</title>
 </head>
 <body>
-    <div class="header">
-        <div class="head">
-            <a class="head__title" href="/">台北一日遊</a>
-            <div class="navbar">
-                <a class="navbar__link">預定行程</a>
-                <a class="navbar__link">登入/註冊</a>
-            </div>
-        </div>
-    </div>
+    <popup-component class="popup" id="popup"></popup-component>
+    <header-component class="header"></header-component>
     <hr class="separator">
     <div class="main-attraction">
         <div class="attraction-intro">
@@ -72,8 +70,6 @@
             <p class="attraction-info__content" id="attraction_direction"></p>
         </div>
     </div>
-    <div class="footer">
-        <p class="footer__copyright">COPYRIGHT © 2023 台北一日遊</p>
-    </div>
+    <footer-component class="footer"></footer-component>
 </body>
 </html>
