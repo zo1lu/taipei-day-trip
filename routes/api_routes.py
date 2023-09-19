@@ -56,7 +56,7 @@ def create_member():
 			res = make_response(jsonify(success_message),200,header)
 			return res
 		else:
-			res = make_response(jsonify(create_error_message("註冊失敗")),400,header)
+			res = make_response(jsonify(create_error_message()),400,header)
 			return res
 	except Exception as e:
 		print(e)
@@ -84,7 +84,7 @@ def log_in():
 			res = make_response(jsonify(token),200,header)
 			return res
 		else:
-			res = make_response(jsonify(create_error_message("登入失敗")),400,header)
+			res = make_response(jsonify(create_error_message()),400,header)
 			return res
 	except Exception as e:
 			print(e)

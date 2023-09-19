@@ -141,12 +141,7 @@ def decode_token(token):
         print(e)
         return False
 
-def create_error_message(message):
-    if message:
-        return {
-			"error": True,
-			"message": message}
-    else:
-        {
-			"error": True,
-			"message": "請按照情境提供對應的錯誤訊息"}
+def create_error_message():
+    return{
+        "error": True,
+        "message": "請按照情境提供對應的錯誤訊息"}
