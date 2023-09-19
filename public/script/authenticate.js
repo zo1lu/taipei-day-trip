@@ -136,8 +136,9 @@ function requestAuthenticate(token){
 async function signup(){
     if (checkInputNotEmpty(false)){
         let data = await requestCreateMember(); 
-        const message = data["ok"]?"註冊成功":"註冊失敗"
-        showResultMessage(false,message,false);
+        const message = data["ok"]?"註冊成功":"註冊失敗";
+        const alert = data["ok"]?false:true;
+        showResultMessage(false,message,alert);
     }
 }
 async function login(){
