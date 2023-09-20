@@ -1,13 +1,10 @@
-function refreshPopupMessage(){
-    const loginMessage = document.getElementById("login_message");
+function clearPopupMessage(){
     const loginResultMessage = document.getElementById("login_result_message");
-    const signupMessage = document.getElementById("signup_message");
     const signupResultMessage = document.getElementById("signup_result_message");
-    loginMessage.style.display="block";
     loginResultMessage.style.display = "none";
-    signupMessage.style.display="block";
     signupResultMessage.style.display = "none";
-
+}
+function clearInput(){
     document.getElementById("login_email").value = "";
     document.getElementById("login_password").value = "";
     document.getElementById("signup_name").value = "";
@@ -17,13 +14,16 @@ function refreshPopupMessage(){
 function switchPopupDisplay(show){
     const popup = document.getElementById("popup")
     popup.style.display = show?"none":"block"
-    refreshPopupMessage()
+    clearPopupMessage();
+    clearInput();
 }
 function switchPopupBox(haveAccount){
     const loginBox = document.getElementById("login_box");
     const signupBox = document.getElementById("signup_box");
     loginBox.style.display = haveAccount?"block":"none";
-    signupBox.style.display = haveAccount?"none":"Block";
+    signupBox.style.display = haveAccount?"none":"block";
+    clearPopupMessage();
+    clearInput();
 }
 function setAccountBtn(authenticated){
     const loginBtn = document.getElementById("login_btn")
@@ -32,19 +32,15 @@ function setAccountBtn(authenticated){
     logoutBtn.style.display = authenticated?"block":"none"
 }
 function showResultMessage(member, message, alert=true){
-    if (member){
-        const loginMessage = document.getElementById("login_message");
+    if(member){
         const loginResultMessage = document.getElementById("login_result_message");
-        loginMessage.style.display="none";
         loginResultMessage.innerText = message;
         loginResultMessage.style.display = "block";
     }else{
-        const signupMessage = document.getElementById("signup_message");
         const signupResultMessage = document.getElementById("signup_result_message");
-        signupMessage.style.display="none";
         signupResultMessage.innerText = message;
-        signupResultMessage.style.display = "block";
         signupResultMessage.style.color = alert?"rgb(241, 67, 67)":"rgb(35, 159, 35)";
+        signupResultMessage.style.display = "block";
     }
 }
 function checkInputNotEmpty(haveAccount){

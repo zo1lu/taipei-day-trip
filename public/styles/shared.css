@@ -7,10 +7,11 @@
   z-index: 3;
 }
 .popup .login__box, .popup .signup__box {
-  display: none;
+  display: block;
   position: relative;
   width: 340px;
-  height: 275px;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: auto;
   margin-top: 80px;
   background-color: #FFF;
@@ -102,10 +103,14 @@
 .popup .login__box .popup__wrapper .popup__result-message, .popup .signup__box .popup__wrapper .popup__result-message {
   display: none;
   color: rgb(241, 67, 67);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
 }
 .popup .signup__box {
-  display: block;
-  height: 332px;
+  display: none;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .header {

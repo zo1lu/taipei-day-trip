@@ -9,11 +9,12 @@
     background-color: rgba( $Black, 0.25);
     z-index: 3;
     .login__box{
-        display: none;
+        display: block;
         position:relative;
 
         width: 340px;
-        height: 275px;
+        // height: 275px;
+        height:fit-content;
         margin:auto;
         margin-top: 80px;
         background-color: $White;
@@ -115,15 +116,20 @@
             .popup__result-message{
                 @extend .popup__message;
                 display: none;
+
                 color:$alert;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
             }
         }
     };
     .signup__box{
         // display: none;
         @extend .login__box;
-        display: block;
-        height:332px;
+        display: none;
+        // height:332px;
+        height:fit-content;
     };
 }
 
