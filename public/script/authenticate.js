@@ -16,6 +16,13 @@ function switchPopupDisplay(show){
     popup.style.display = show?"none":"block"
     clearPopupMessage();
     clearInput();
+    setPopupBoxesToDefaultDisplay();
+}
+function setPopupBoxesToDefaultDisplay(){
+    const loginBox = document.getElementById("login_box");
+    const signupBox = document.getElementById("signup_box");
+    signupBox.style.display = "none";
+    loginBox.style.display = "block";
 }
 function switchPopupBox(haveAccount){
     const loginBox = document.getElementById("login_box");
