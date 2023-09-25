@@ -145,3 +145,52 @@ def create_error_message():
     return{
         "error": True,
         "message": "請按照情境提供對應的錯誤訊息"}
+
+def get_bookings(user_id):
+    try:
+        con = mysql.connect(**DB_CONFIG)
+        cursor = con.cursor(dictionary=True)
+        query = "SELECT id, attraction_id as site_id, date, time, price FROM bookings WHERE user_id = %s and paid = false"
+        cursor.execute(query,(user_id,))
+        bookings = cursor.fetchall()
+        result = list(map(lambda book:{**book, "date": book["date"].strftime('%Y-%m-%d'), "attraction":get_attraction_data(book["site_id"])}, bookings))
+        print(result)
+        return result
+    except Exception as e:
+        print(e);
+        return False
+    
+def get_attraction_data(attraction_id):
+    try:
+        con = mysql.connect(**DB_CONFIG)
+        cursor = con.cursor(dictionary=True)
+        query = "SELECT site.id as id, site.name as name, site.address as address, img.image_url as image FROM attractions as site LEFT JOIN images as img ON img.attraction_id = site.id WHERE site.id = %s LIMIT 1;"
+        cursor.execute(query,(attraction_id,))
+        attraction_data = cursor.fetchone()
+        return attraction_data
+    except Exception as e:
+        print(e);
+        return False
+    
+def create_booking(user_id, attraction_id, date, time, price):
+    try:
+        con = mysql.connect(**DB_CONFIG)
+        cursor = con.cursor(dictionary=True)
+        query = "INSERT INTO bookings (user_id, attraction_id, date, time, price) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(query,(user_id, attraction_id, date, time, price))
+        con.commit()
+    except Exception as e:
+        print(e)
+        return False
+    
+def delete_booking(booking_id):
+    try:
+        con = mysql.connect(**DB_CONFIG)
+        cursor = con.cursor(dictionary=True)
+        query = "DELETE FROM bookings WHERE id = %s"
+        cursor.execute(query,(booking_id,))
+    except Exception as e:
+        print(e)
+        return False
+
+get_bookings(10)
