@@ -169,7 +169,8 @@
             .navbar__link{
                 height: 34px;
                 padding: 10px;
-                
+
+                text-decoration: none;                
                 @include link-text;
                 color: $secondary-color-gray-70;
                 &:hover{
