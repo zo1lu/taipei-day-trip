@@ -2,7 +2,7 @@ let nextPageNum = 0;
 let currentKeyword = "";
 
 async function getMrtsList(){
-    url="/api/mrts"
+    let url="/api/mrts"
     try{
         const response = await fetch(url);
         const mrts = await response.json();
@@ -13,7 +13,7 @@ async function getMrtsList(){
     
 }
 async function getAttractionsbyPage(pageNumber,keyword){
-    url = `/api/attractions?page=${pageNumber}&keyword=${keyword}`;
+    let url = `/api/attractions?page=${pageNumber}&keyword=${keyword}`;
     try{
         const response = await fetch(url);
         const attractions = await response.json();
@@ -103,19 +103,6 @@ function firstLoad(){
     
 }
 
-function searchByKeyword(){
-    const attractionsListContainer = document.getElementById("attractions_list_container");
-    const key = document.getElementById("search_input").value;
-    attractionsListContainer.textContent = "";
-    addAttractionCards(0,key)
-    .then(()=>{
-        buildObserve(observer)
-    })
-    .catch((e)=>{
-        console.log(e)
-    })
-}
-
 const callback = (entries)=>{
     if(entries[0].isIntersecting && Math.floor(entries[0].intersectionRatio) === 1){
         observer.disconnect();
@@ -140,6 +127,19 @@ const buildObserve = (_observer)=>{
     _observer.observe(target)
 }
 
+function searchByKeyword(){
+    const attractionsListContainer = document.getElementById("attractions_list_container");
+    const key = document.getElementById("search_input").value;
+    attractionsListContainer.textContent = "";
+    addAttractionCards(0,key)
+    .then(()=>{
+        buildObserve(observer)
+    })
+    .catch((e)=>{
+        console.log(e)
+    })
+}
+
 function moveRight(){
     const container = document.getElementById("mrts_list_wrapper");
     const width = container.offsetWidth - 50;
@@ -152,8 +152,11 @@ function moveLeft(){
     container.scrollLeft -= width;
 }
 
+window.searchByKeyword = searchByKeyword;
+window.moveRight = moveRight;
+window.moveLeft = moveLeft;
 
-createMrtsList()
-firstLoad()
+createMrtsList();
+firstLoad();
 
 
