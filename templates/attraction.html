@@ -8,8 +8,8 @@
     <script src="/components/loginPopup.js" type="text/javascript" defer></script>
     <script src="/components/header.js" type="text/javascript" defer></script>
     <script src="/components/footer.js" type="text/javascript" defer></script>
-    <script src="/script/attraction.js"></script>
-    <script src="/script/authenticate.js" defer></script>
+    <script type="module" src="/script/attraction.js" defer></script>
+    <script type="module" src="/script/authenticate.js" defer></script>
     <title>景點介紹</title>
 </head>
 <body>
@@ -33,31 +33,33 @@
             <div class="attraction-intro__intro">
                 <p class="attraction-intro__name" id="attraction_name"></p>
                 <p class="attraction-intro__category-and-mrt" id="attraction_location"></p>
-                <form class="attraction-intro__booking">
+                <div class="attraction-intro__booking">
                     <p class="attraction-intro__label">訂購導覽行程</p>
                     <p class="attraction-intro__subtitle">以此景點為中心的一日行程，帶你探索城市角落故事</p>
                     <div class="attraction-intro__date-section">
                         <p class="attraction-intro__label">選擇日期：</p>
-                        <input class="attraction-intro__date" type="date" placeholder="yyyy-mm-dd"/>
+                        <input class="attraction-intro__date" type="date" id="tour_date" placeholder="yyyy-mm-dd"/>
                     </div>
                     <div class="attraction-intro__time">
                         <p class="attraction-intro__label">選擇時間：</p>
                         <div class="attraction-intro__option">
-                            <input type="radio" class="attraction-intro__radio" name="time" id="radio_first_half_of_day" onchange="setTourPrice()" checked/>
+                            <input type="radio" class="attraction-intro__radio" name="time" 
+                            value="10,12"
+                            id="radio_first_half_of_day" onchange="setTourPrice()" checked/>
                             <label class="attraction-intro__radio-label" for="radio_first_half_of_day">上半天</label>
                         </div>
                         <div class="attraction-intro__option">
-                            <input type="radio" class="attraction-intro__radio" name="time" id="radio_second_half_of_day" onchange="setTourPrice()"/>
+                            <input type="radio" class="attraction-intro__radio" name="time" 
+                            value="15,17" id="radio_second_half_of_day" onchange="setTourPrice()"/>
                             <label class="attraction-intro__radio-label" for="radio_second_half_of_day">下半天</label>
                         </div>
-                        
                     </div>
                     <div class="attraction-intro__price">
                         <p class="attraction-intro__label">導覽費用：</p>
-                        <p class="attraction-intro__option" id="text_tour_price">新台幣 2000 元</p>
+                        <p class="attraction-intro__option" id="tour_price">新台幣 2000 元</p>
                     </div>
-                    <button class="attraction-intro__submit">開始預約行程</button>
-                </form>
+                    <button class="attraction-intro__submit" id="book_submit" onclick="bookTour()">開始預約行程</button>
+                </div>
             </div>
         </div>
         <hr class="separator">
