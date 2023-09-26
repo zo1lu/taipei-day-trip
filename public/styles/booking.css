@@ -120,10 +120,10 @@ body::-webkit-scrollbar {
   height: 200px;
   margin: 0 10px;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(250px, 300px), 180px;
+    grid-template-rows: minmax(250px, 300px), 200px;
     height: auto;
     gap: 10px;
     margin: 15px 0;
@@ -135,7 +135,7 @@ body::-webkit-scrollbar {
   -o-object-fit: cover;
      object-fit: cover;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__img {
     width: 100%;
     min-height: 250px;
@@ -147,7 +147,7 @@ body::-webkit-scrollbar {
   -o-object-fit: cover;
      object-fit: cover;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__img img {
     width: 100%;
     min-height: 250px;
@@ -163,10 +163,10 @@ body::-webkit-scrollbar {
   font-weight: 700;
   line-height: 14px;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__info-container {
     width: 100%;
-    height: 180px;
+    height: 200px;
   }
 }
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__delete {
@@ -179,7 +179,7 @@ body::-webkit-scrollbar {
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__delete:hover {
   cursor: pointer;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__info-container .item__delete {
     bottom: 0px;
     top: auto;
@@ -191,10 +191,12 @@ body::-webkit-scrollbar {
 }
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__info {
   color: #666;
+  line-height: 20px;
 }
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__info .item__content {
   margin-left: 5px;
   font-weight: 500;
+  line-height: 20px;
 }
 .main-booking .booking__steps .booking__contact, .main-booking .booking__steps .booking__payment {
   width: 1000px;
@@ -222,15 +224,20 @@ body::-webkit-scrollbar {
   line-height: 16px;
 }
 .main-booking .booking__steps .booking__contact .booking__info, .main-booking .booking__steps .booking__payment .booking__info {
+  display: flex;
+  align-items: center;
   height: 38px;
+  max-width: 100%;
 }
 .main-booking .booking__steps .booking__contact .booking__info .booking__label, .main-booking .booking__steps .booking__payment .booking__info .booking__label {
+  min-width: 80px;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 14px;
 }
 .main-booking .booking__steps .booking__contact .booking__info .booking__input, .main-booking .booking__steps .booking__payment .booking__info .booking__input {
+  max-width: calc(100% - 80px);
   height: 100%;
   padding: 10px;
   color: #000;
