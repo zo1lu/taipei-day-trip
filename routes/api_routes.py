@@ -95,9 +95,9 @@ def log_in():
 def get_bookings_list():
 	try:
 		token = request.headers.get('Authorization').split(" ")[1]
-		validation_id = decode_token(token).id
+		validation_id = decode_token(token)["id"]
 		if validation_id:
-			bookings_list = get_bookings(validation_id) | None
+			bookings_list = get_bookings(validation_id)
 			result_data = {"data":bookings_list}
 			res = make_response(jsonify(result_data),200,header)
 			return res
@@ -113,7 +113,7 @@ def get_bookings_list():
 def create_booking_api():
 	try:
 		token = request.headers.get('Authorization').split(" ")[1]
-		validation_id = decode_token(token).id
+		validation_id = decode_token(token)["id"]
 		if validation_id:
 			try:
 				data = request.get_json()
@@ -140,7 +140,7 @@ def create_booking_api():
 @api.route("/booking", methods = ["DELETE"])
 def delete_booking_api():
 	token = request.headers.get('Authorization').split(" ")[1]
-	validation_id = decode_token(token).id
+	validation_id = decode_token(token)["id"]
 	if validation_id:
 		try:
 			data = request.get_json()
@@ -151,6 +151,8 @@ def delete_booking_api():
 			return res
 		except Exception as e:
 			print(e)
+			res = make_response(jsonify(create_error_message()),400,header)
+			return res
 	else:
 		res = make_response(jsonify(create_error_message()),403,header)
 		return res

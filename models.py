@@ -154,7 +154,6 @@ def get_bookings(user_id):
         cursor.execute(query,(user_id,))
         bookings = cursor.fetchall()
         result = list(map(lambda book:{**book, "date": book["date"].strftime('%Y-%m-%d'), "attraction":get_attraction_data(book["site_id"])}, bookings))
-        print(result)
         return result
     except Exception as e:
         print(e);
@@ -189,6 +188,7 @@ def delete_booking(booking_id):
         cursor = con.cursor(dictionary=True)
         query = "DELETE FROM bookings WHERE id = %s"
         cursor.execute(query,(booking_id,))
+        con.commit()
     except Exception as e:
         print(e)
         return False
