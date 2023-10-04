@@ -1,5 +1,4 @@
 import { authenticateLogin } from "./auth.js";
-
 async function showBookingList(){
     let authenticatedUser = await authenticateLogin()
     if (authenticatedUser){
@@ -121,3 +120,195 @@ async function deleteBookingTour(bookingId){
 window.deleteBookingTour = deleteBookingTour;
 
 showBookingList();
+
+//payment 
+TPDirect.card.onUpdate(function(update){
+    const submitButton = document.getElementById("submit_btn");
+    if (update.canGetPrime) {
+        // Enable submit Button to get prime.
+        submitButton.removeAttribute('disabled')
+        submitButton.classList.remove("disabled")
+    } else {
+        // Disable submit Button to get prime.
+        submitButton.setAttribute('disabled', true)
+        submitButton.classList.add("disabled")
+    }
+
+    // number 欄位是錯誤的
+    const cardNumber = document.getElementById("card-number");
+    const cardExpiration = document.getElementById("card-expiration-date");
+    const cardCcv = document.getElementById("card-ccv");
+    if (update.status.number === 2) {
+        cardNumber.style.borderColor = "red"
+    } else if (update.status.number === 0) {
+        cardNumber.style.borderColor = "green"
+    } else {
+        cardNumber.style.borderColor = "gray"
+    }
+    
+    if (update.status.expiry === 2) {
+        cardExpiration.style.borderColor = "red"
+    } else if (update.status.expiry === 0) {
+        cardExpiration.style.borderColor = "green"
+    } else {
+        cardExpiration.style.borderColor = "gray"
+    }
+    
+    if (update.status.ccv === 2) {
+        cardCcv.style.borderColor = "red"
+    } else if (update.status.ccv === 0) {
+        cardCcv.style.borderColor = "green"
+    } else {
+        cardCcv.style.borderColor = "gray"
+    }
+})
+function setUpCardField(){
+    let fields = {
+        number: {
+            // css selector
+            element: document.getElementById('card-number'),
+            placeholder: '**** **** **** ****'
+        },
+        expirationDate: {
+            // DOM object
+            element: document.getElementById('card-expiration-date'),
+            placeholder: 'MM / YY'
+        },
+        ccv: {
+            element: document.getElementById('card-ccv'),
+            placeholder: '後三碼'
+        }
+    }
+    TPDirect.card.setup({
+        fields: fields,
+        styles: {
+            // Style all elements
+            'input': {
+                'color': 'black'
+            },
+            // Styling ccv field
+            'input.ccv': {
+                'font-size': '16px'
+            },
+            // Styling expiration-date field
+            'input.expiration-date': {
+                'font-size': '16px'
+            },
+            // Styling card-number field
+            'input.card-number': {
+                'font-size': '16px'
+            },
+            // style focus state
+            ':focus': {
+                'color': 'black'
+            },
+            // style valid state
+            '.valid': {
+                'color': 'green'
+            },
+            // style invalid state
+            '.invalid': {
+                'color': 'red'
+            },
+        },
+        // 此設定會顯示卡號輸入正確後，會顯示前六後四碼信用卡卡號
+        isMaskCreditCardNumber: true,
+        maskCreditCardNumberRange: {
+            beginIndex: 6, 
+            endIndex: 11
+        }
+    })
+}
+function submitPayment(event) {
+    event.preventDefault()
+    if(isContactInfoNull()){
+        alert("請填寫完整聯絡人姓名、電子信箱、連絡電話")
+        return 
+    }
+    // 取得 TapPay Fields 的 status
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+    // 確認是否可以 getPrime
+    if (tappayStatus.canGetPrime === false) {
+        alert('付款資料錯誤，請重新填寫')
+        return
+    }
+    // Get prime
+    TPDirect.card.getPrime(async (result) => {
+        if (result.status !== 0) {
+            alert('發生錯誤' + result.msg)
+            return
+        }
+        transactionAnimationToggle(true);
+        let prime = result.card.prime;
+        let responseData = await requestOrdering(prime);
+        let resultData = responseData.json();
+        resultData
+        .then((data)=>dealOrderingResponse(data))
+        .catch(e=>console.error(e))
+    })
+}
+function transactionAnimationToggle(show){
+    const transactionAnimation = document.getElementById("transaction_animation");
+    transactionAnimation.style.display = show?"flex":"none";
+}
+function dealOrderingResponse(result){
+    //deal with result
+    if (result["data"]){
+        setTimeout(()=>{
+            window.location.href =`/thankyou?number=${result["data"]["number"]}`
+        },3000)
+    }else{
+        transactionAnimationToggle(false);
+        alert("發生錯誤，請再次嘗試")
+    }
+}
+async function requestOrdering(prime){
+    let token = localStorage.getItem("token")
+    let url = "/api/orders"
+    let totalPrice = document.getElementById("total_fee").innerText
+    let name = document.getElementById("contact_name").value
+    let email = document.getElementById("contact_email").value
+    let phone = document.getElementById("contact_phone").value
+    const head = {
+        "Authorization":`Bearer ${token}`,
+        "Content-Type":"application/json"
+    }
+    const body = {
+        "prime":prime,
+        "total_price":totalPrice,
+        "contact":{
+            "name":name,
+            "email":email,
+            "phone":phone
+        }
+    }
+    let response = await fetch(url, {method:"POST", headers:head, body:JSON.stringify(body)})
+    return response
+}
+function isContactInfoNull(){
+    const contactName = document.getElementById("contact_name").value
+    const contactEmail = document.getElementById("contact_email").value
+    const contactPhone = document.getElementById("contact_phone").value
+    if (contactName==""||contactEmail==""||contactPhone==""){
+        return true
+    }
+    return false
+}
+
+window.submitPayment = submitPayment;
+
+setUpCardField();
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Develope Queue
+// function isEmailValid(){}
+// function isPhoneValid(){}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+// For testing
+// function setTestingData(){
+//     document.getElementById("contact_name").value ="tester"
+//     document.getElementById("contact_email").value = "test@gmail.com"
+//     document.getElementById("contact_phone").value = "0912345678"
+// }
+// setTestingData();
