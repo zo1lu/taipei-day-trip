@@ -122,7 +122,7 @@ body::-webkit-scrollbar {
   }
 }
 .main-thankyou .order-content .order__trips .trip-title .trip__title {
-  width: calc((100% - 140px) / 6);
+  width: calc((100% - 180px) / 6);
   height: 22px;
   line-height: 22px;
   vertical-align: middle;
@@ -218,10 +218,9 @@ body::-webkit-scrollbar {
   }
 }
 .main-thankyou .order-content .order__contact .order__title {
-  width: 20%;
   font-size: 14px;
   text-align: end;
-  min-width: 200px;
+  margin-left: 20px;
 }
 .main-thankyou .order-content .order__contact .order__title .order__content {
   font-weight: bold;
