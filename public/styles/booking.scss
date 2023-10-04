@@ -24,6 +24,74 @@ body{
         display: none;  /* Safari and Chrome */
     };
 };
+.transaction-animation{
+    display: none;
+    position: fixed;
+
+    width:100%;
+    height:100vh;
+    background-color: $White;
+    z-index: 100;
+    .animation-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin:auto;
+        ul{
+            display: flex;
+    
+            width:100px;
+            height:80px;
+            li{
+                list-style: none;
+                width:6px;
+                height:20px;
+                margin:0 4px;
+                background-color: $primary-color-cyan-70;
+    
+                animation: animate .7s infinite alternate;
+                @keyframes animate {
+                    0% {
+                        transform: scaleY(1);
+                    };
+                    25% {
+                        transform: scaleY(1);
+                    };
+                    50% {
+                        transform: scaleY(1);
+                    };
+                    75% {
+                        transform: scaleY(1);
+                    };
+                    100% {
+                        transform: scaleY(3);
+                    };
+                }
+                &:nth-child(1){
+                    animation-delay: .1s;
+                };
+                &:nth-child(2){
+                    animation-delay: .2s;
+                };
+                &:nth-child(3){
+                    animation-delay: .3s;
+                };
+                &:nth-child(4){
+                    animation-delay: .4s;
+                };
+                &:nth-child(5){
+                    animation-delay: .5s;
+                };
+                &:nth-child(6){
+                    animation-delay: .6s;
+                };
+            };
+        };
+        p{
+            color: $primary-color-cyan-70;
+        }
+    }
+}
 // booking page
 .separator{
     width:100%;
@@ -106,9 +174,9 @@ body{
                 width: 100%;
                 height:200px;
                 margin: 0 10px;
-                @media only screen and (max-width: 600px) {
+                @media only screen and (max-width: 800px) {
                     grid-template-columns: 1fr;
-                    grid-template-rows: minmax(250px,300px), 180px;
+                    grid-template-rows: minmax(250px,300px), 200px;
                     height:auto;
                     gap:10px;
                     margin:15px 0;
@@ -117,7 +185,7 @@ body{
                     width:250px;
                     height:200px;
                     object-fit: cover;
-                    @media only screen and (max-width: 600px) {
+                    @media only screen and (max-width: 800px) {
                         width:100%;
                         min-height: 250px;
                     };
@@ -125,7 +193,7 @@ body{
                         width:250px;
                         height:200px;
                         object-fit: cover;
-                        @media only screen and (max-width: 600px) {
+                        @media only screen and (max-width: 800px) {
                             width:100%;
                             min-height: 250px;
                         };
@@ -139,9 +207,9 @@ body{
                     position: relative;
                     
                     @include text;
-                    @media only screen and (max-width: 600px) {
+                    @media only screen and (max-width: 800px) {
                         width: 100%;
-                        height: 180px;
+                        height: 200px;
                     };
                     .item__delete{
                         position: absolute;
@@ -153,7 +221,7 @@ body{
                         &:hover{
                             cursor: pointer;
                         }
-                        @media only screen and (max-width: 600px) {
+                        @media only screen and (max-width: 800px) {
                             bottom:0px;
                             top:auto;
                         };
@@ -165,9 +233,11 @@ body{
                     };
                     .item__info{
                         color:$secondary-color-gray-70;
+                        line-height: 20px;
                         .item__content{
                             margin-left: 5px;
                             font-weight: 500;
+                            line-height: 20px;
                         };
                     };  
                     };
@@ -194,11 +264,16 @@ body{
                 @include booking-title;
             };
             .booking__info{
+                display: flex;
+                align-items: center;
                 height:38px;
+                max-width: 100%;
                 .booking__label{
+                    min-width: 80px;
                     @include link-text
                 };
                 .booking__input{
+                    max-width: calc(100% - 80px);
                     height:100%;
                     padding:10px;
                     
@@ -211,7 +286,24 @@ body{
                     &::placeholder{
                         color:$secondary-color-gray-50;
                     }
+                    .tappay-field-focus {
+                        border-color: #66afe9;
+                        outline: 0;
+                        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+                    };
                 };
+                .tpfield {
+                    @extend .booking__input;
+                    max-width: calc(100% - 80px);
+                    width:250px;
+                };
+                .tappay-field-focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+}
             };
             .booking__note{
                 height:auto;
@@ -257,6 +349,12 @@ body{
                     cursor: pointer;
                 }
             };
+            .disabled{
+                background-color: $primary-color-cyan-50;
+                &:hover{
+                    cursor: auto;
+                }
+            }
         };
     };
 };

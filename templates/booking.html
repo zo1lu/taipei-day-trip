@@ -13,6 +13,23 @@
     <title>預定行程</title>
 </head>
 <body>
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script>
+        TPDirect.setupSDK(137045, 'app_rKTuFjRCpM5jQNy5hhzXmrxlO5eEu6oNmxce4aUMeddsdDCRuey3cnLTjBg2', 'sandbox');
+    </script>
+    <div class="transaction-animation" id="transaction_animation">
+        <div class="animation-container">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <p>交易進行中，請稍後...</p>
+        </div>
+    </div>
     <popup-component class="popup" id="popup"></popup-component>
     <header-component class="header"></header-component>
     <hr class="separator">
@@ -44,21 +61,21 @@
                 <p class="booking__title">信用卡付款資訊</p>
                 <div class="booking__info">
                     <label class="booking__label">卡片號碼：</label>
-                    <input class="booking__input" type="text" maxlength="16" placeholder="xxxx xxxx xxxx xxxx" id="card_number"/>
+                    <div class="booking__input tpfield" type="text" id="card-number"></div>
                 </div>
                 <div class="booking__info">
                     <label class="booking__label">過期時間：</label>
-                    <input class="booking__input" type="text" placeholder="MM/YY" maxlength="5" id="expire_time"/>
+                    <div class="booking__input tpfield" type="text" id="card-expiration-date"></div>
                 </div>
                 <div class="booking__info">
                     <label class="booking__label">驗證密碼：</label>
-                    <input class="booking__input" type="text" placeholder="CVV" maxlength="3" id="validate_number"/>
+                    <div class="booking__input tpfield" type="text" id="card-ccv"></div>
                 </div>
             </div>
             <hr class="separator">     
             <div class="booking__summary">
                 <p class="booking__total-cost">總價：新台幣<span id="total_fee"></span>元</p>
-                <button class="booking__submit">確認訂購並付款</button>
+                <button class="booking__submit disabled" id="submit_btn" disabled="true" onclick="submitPayment(event)">確認訂購並付款</button>
             </div>
         </div>
     </div>

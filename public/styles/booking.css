@@ -22,6 +22,72 @@ body::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
+.transaction-animation {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: #FFF;
+  z-index: 100;
+}
+.transaction-animation .animation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+.transaction-animation .animation-container ul {
+  display: flex;
+  width: 100px;
+  height: 80px;
+}
+.transaction-animation .animation-container ul li {
+  list-style: none;
+  width: 6px;
+  height: 20px;
+  margin: 0 4px;
+  background-color: #489;
+  animation: animate 0.7s infinite alternate;
+}
+@keyframes animate {
+  0% {
+    transform: scaleY(1);
+  }
+  25% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+  75% {
+    transform: scaleY(1);
+  }
+  100% {
+    transform: scaleY(3);
+  }
+}
+.transaction-animation .animation-container ul li:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.transaction-animation .animation-container ul li:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.transaction-animation .animation-container ul li:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.transaction-animation .animation-container ul li:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.transaction-animation .animation-container ul li:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.transaction-animation .animation-container ul li:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.transaction-animation .animation-container p {
+  color: #489;
+}
+
 .separator, .main-booking .booking__steps .separator {
   width: 100%;
   border: none;
@@ -120,10 +186,10 @@ body::-webkit-scrollbar {
   height: 200px;
   margin: 0 10px;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(250px, 300px), 180px;
+    grid-template-rows: minmax(250px, 300px), 200px;
     height: auto;
     gap: 10px;
     margin: 15px 0;
@@ -135,7 +201,7 @@ body::-webkit-scrollbar {
   -o-object-fit: cover;
      object-fit: cover;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__img {
     width: 100%;
     min-height: 250px;
@@ -147,7 +213,7 @@ body::-webkit-scrollbar {
   -o-object-fit: cover;
      object-fit: cover;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__img img {
     width: 100%;
     min-height: 250px;
@@ -163,10 +229,10 @@ body::-webkit-scrollbar {
   font-weight: 700;
   line-height: 14px;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__info-container {
     width: 100%;
-    height: 180px;
+    height: 200px;
   }
 }
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__delete {
@@ -179,7 +245,7 @@ body::-webkit-scrollbar {
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__delete:hover {
   cursor: pointer;
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
   .main-booking .booking__steps .booking__list .list-item .item__info-container .item__delete {
     bottom: 0px;
     top: auto;
@@ -191,10 +257,12 @@ body::-webkit-scrollbar {
 }
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__info {
   color: #666;
+  line-height: 20px;
 }
 .main-booking .booking__steps .booking__list .list-item .item__info-container .item__info .item__content {
   margin-left: 5px;
   font-weight: 500;
+  line-height: 20px;
 }
 .main-booking .booking__steps .booking__contact, .main-booking .booking__steps .booking__payment {
   width: 1000px;
@@ -222,15 +290,20 @@ body::-webkit-scrollbar {
   line-height: 16px;
 }
 .main-booking .booking__steps .booking__contact .booking__info, .main-booking .booking__steps .booking__payment .booking__info {
+  display: flex;
+  align-items: center;
   height: 38px;
+  max-width: 100%;
 }
 .main-booking .booking__steps .booking__contact .booking__info .booking__label, .main-booking .booking__steps .booking__payment .booking__info .booking__label {
+  min-width: 80px;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 14px;
 }
-.main-booking .booking__steps .booking__contact .booking__info .booking__input, .main-booking .booking__steps .booking__payment .booking__info .booking__input {
+.main-booking .booking__steps .booking__contact .booking__info .booking__input, .main-booking .booking__steps .booking__payment .booking__info .booking__input, .main-booking .booking__steps .booking__contact .booking__info .tpfield, .main-booking .booking__steps .booking__payment .booking__info .tpfield {
+  max-width: calc(100% - 80px);
   height: 100%;
   padding: 10px;
   color: #000;
@@ -242,11 +315,25 @@ body::-webkit-scrollbar {
   border-radius: 5px;
   border: 1px solid #E8E8E8;
 }
-.main-booking .booking__steps .booking__contact .booking__info .booking__input::-moz-placeholder, .main-booking .booking__steps .booking__payment .booking__info .booking__input::-moz-placeholder {
+.main-booking .booking__steps .booking__contact .booking__info .booking__input::-moz-placeholder, .main-booking .booking__steps .booking__payment .booking__info .booking__input::-moz-placeholder, .main-booking .booking__steps .booking__contact .booking__info .tpfield::-moz-placeholder, .main-booking .booking__steps .booking__payment .booking__info .tpfield::-moz-placeholder {
   color: #757575;
 }
-.main-booking .booking__steps .booking__contact .booking__info .booking__input::placeholder, .main-booking .booking__steps .booking__payment .booking__info .booking__input::placeholder {
+.main-booking .booking__steps .booking__contact .booking__info .booking__input::placeholder, .main-booking .booking__steps .booking__payment .booking__info .booking__input::placeholder, .main-booking .booking__steps .booking__contact .booking__info .tpfield::placeholder, .main-booking .booking__steps .booking__payment .booking__info .tpfield::placeholder {
   color: #757575;
+}
+.main-booking .booking__steps .booking__contact .booking__info .booking__input .tappay-field-focus, .main-booking .booking__steps .booking__payment .booking__info .booking__input .tappay-field-focus, .main-booking .booking__steps .booking__contact .booking__info .tpfield .tappay-field-focus, .main-booking .booking__steps .booking__payment .booking__info .tpfield .tappay-field-focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.main-booking .booking__steps .booking__contact .booking__info .tpfield, .main-booking .booking__steps .booking__payment .booking__info .tpfield {
+  max-width: calc(100% - 80px);
+  width: 250px;
+}
+.main-booking .booking__steps .booking__contact .booking__info .tappay-field-focus, .main-booking .booking__steps .booking__payment .booking__info .tappay-field-focus {
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .main-booking .booking__steps .booking__contact .booking__note, .main-booking .booking__steps .booking__payment .booking__note {
   height: auto;
@@ -298,4 +385,10 @@ body::-webkit-scrollbar {
 }
 .main-booking .booking__steps .booking__summary .booking__submit:hover {
   cursor: pointer;
+}
+.main-booking .booking__steps .booking__summary .disabled {
+  background-color: #6AB;
+}
+.main-booking .booking__steps .booking__summary .disabled:hover {
+  cursor: auto;
 }/*# sourceMappingURL=booking.css.map */

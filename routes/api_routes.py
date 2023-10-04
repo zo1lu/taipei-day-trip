@@ -1,5 +1,5 @@
 from flask import *
-from models import get_attractions_by_page, get_attraction_by_id, get_mrts, encode_userdata,decode_token, validate_membership, create_account, create_error_message, create_booking, get_bookings, delete_booking
+from models import get_attractions_by_page, get_attraction_by_id, get_mrts, encode_userdata,decode_token, validate_membership, create_account, create_error_message, create_booking, get_bookings, delete_booking, order_and_pay, get_order_full_data
 
 api = Blueprint('api',__name__,url_prefix='/api')
 #API
@@ -155,4 +155,50 @@ def delete_booking_api():
 			return res
 	else:
 		res = make_response(jsonify(create_error_message()),403,header)
+		return res
+	
+@api.route("/orders", methods=["POST"])
+def create_order_api():
+	try:
+		token = request.headers.get('Authorization').split(" ")[1]
+		validation_id = decode_token(token)["id"]
+		if validation_id:
+			try:
+				data = request.get_json()
+				prime = data["prime"]
+				total_price = data["total_price"]
+				#validate data here!
+				name = data["contact"]["name"]
+				email = data["contact"]["email"]
+				phone = data["contact"]["phone"]
+				result = {"data":order_and_pay(validation_id, prime, total_price, name, email, phone)}
+				res = make_response(jsonify(result),200,header)
+				return res
+			except Exception as e:
+				print(e)
+				res = make_response(create_error_message(),400,header)
+				return res
+		else:
+			res = make_response(create_error_message(),403,header)
+			return res
+	except Exception as e:
+		print(e)
+		res = make_response(create_error_message(),500,header)
+		return res
+
+@api.route("/order/<orderNumber>")
+def get_order_by_order_number_api(orderNumber):
+	try:
+		token = request.headers.get('Authorization').split(" ")[1]
+		validation_id = decode_token(token)["id"]
+		if validation_id:
+			result = {"data":get_order_full_data(orderNumber)}
+			res = make_response(jsonify(result),200,header)
+			return res
+		else:
+			res = make_response(create_error_message(),403,header)
+			return res
+	except Exception as e:
+		print(e)
+		res = make_response(create_error_message(),500,header)
 		return res

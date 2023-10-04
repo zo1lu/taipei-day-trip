@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/thankyou.css">
+    <link rel="stylesheet" href="/styles/shared.css">
+    <script src="/components/loginPopup.js" type="text/javascript" defer></script>
+    <script src="/components/header.js" type="text/javascript" defer></script>
+    <script src="/components/footer.js" type="text/javascript" defer></script>
+    <script type="module" src="/script/thankyou.js" type="text/javascript" defer></script>
+    <script type="module" src="/script/authenticate.js" defer></script>
+    <title>感謝預定台北一日遊</title>
+</head>
+<body>
+    <popup-component class="popup" id="popup"></popup-component>
+    <header-component class="header"></header-component>
+    <hr class="separator">
+    <div class="main-thankyou">
+        <p class="thankyou-message">感謝您預定台北一日遊，您的訂單編號：<span id="order_number"></span></p>
+        <div class="order-content" id="order_content">
+            <div class="order__info">
+                <p class="order__title">台北一日遊訂單</p>
+                <p class="order__title">訂單日期：<span class="order__content" id="order_date"></span></p>
+                <p class="order__title">總金額：<span class="order__content" id="order_price"></span></p>
+                <p class="order__title">付款狀態：<span class="order__content" id="order_status"></span></p>
+            </div>
+            <hr class="separator">
+            <div class="order__trips" id="trips_container">
+                <div class="trip-title">
+                    <p class="trip__title">景點資訊</p>
+                    <p class="trip__title">日期</p>
+                    <p class="trip__title">時間</p>
+                    <p class="trip__title">價格</p>
+                </div>
+                <!-- <div class="trip-container">
+                    <img class="trip__image" src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003994.JPG"/>
+                    <div class="trip__info-container">
+                        <div class="trip__site-info">
+                            <p class="trip__name">新北耶誕城</p>
+                            <p class="trip__address">集合地點：台北市  中山區建國北路1段 96 號 B1</p>
+                        </div>
+                        <p class="trip__content">2023-01-02</p>
+                        <p class="trip__content">10:00-12:00</p>
+                        <p class="trip__content">$2000 NTD</p>
+                    </div>
+                </div>
+                <div class="trip-container">
+                    <img class="trip__image" src="https://www.travel.taipei/d_upload_ttn/sceneadmin/pic/11003994.JPG"/>
+                    <div class="trip__info-container">
+                        <div class="trip__info">
+                            <p class="trip__name">新北耶誕城</p>
+                            <p class="trip__sub-content">集合地點：台北市  中山區建國北路1段 96 號 B1</p>
+                        </div>
+                        <p class="trip__content">2023-01-02</p>
+                        <p class="trip__content">10:00-12:00</p>
+                        <p class="trip__content">$2000 NTD</p>
+                    </div>
+                </div> -->
+            </div>
+            <hr class="separator">
+            <div class="order__contact">
+                <p class="order__title">聯絡人姓名：<span class="order__content" id="contact_name"></span></p>
+                <p class="order__title">Email：<span class="order__content" id="contact_email"></span></p>
+                <p class="order__title">聯絡電話：<span class="order__content" id="contact_phone"></span></p>
+            </div>
+        </div>
+    </div>
+    <footer-component class="footer"></footer-component>
+</body>
+</html>
