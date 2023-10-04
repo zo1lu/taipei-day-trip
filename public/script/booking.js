@@ -1,4 +1,5 @@
 import { authenticateLogin } from "./auth.js";
+
 async function showBookingList(){
     let authenticatedUser = await authenticateLogin()
     if (authenticatedUser){
@@ -117,10 +118,6 @@ async function deleteBookingTour(bookingId){
     }
 }
 
-window.deleteBookingTour = deleteBookingTour;
-
-showBookingList();
-
 //payment 
 TPDirect.card.onUpdate(function(update){
     const submitButton = document.getElementById("submit_btn");
@@ -162,6 +159,7 @@ TPDirect.card.onUpdate(function(update){
         cardCcv.style.borderColor = "gray"
     }
 })
+
 function setUpCardField(){
     let fields = {
         number: {
@@ -219,6 +217,7 @@ function setUpCardField(){
         }
     })
 }
+
 function submitPayment(event) {
     event.preventDefault()
     if(isContactInfoNull()){
@@ -247,21 +246,12 @@ function submitPayment(event) {
         .catch(e=>console.error(e))
     })
 }
+
 function transactionAnimationToggle(show){
     const transactionAnimation = document.getElementById("transaction_animation");
     transactionAnimation.style.display = show?"flex":"none";
 }
-function dealOrderingResponse(result){
-    //deal with result
-    if (result["data"]){
-        setTimeout(()=>{
-            window.location.href =`/thankyou?number=${result["data"]["number"]}`
-        },3000)
-    }else{
-        transactionAnimationToggle(false);
-        alert("發生錯誤，請再次嘗試")
-    }
-}
+
 async function requestOrdering(prime){
     let token = localStorage.getItem("token")
     let url = "/api/orders"
@@ -285,6 +275,18 @@ async function requestOrdering(prime){
     let response = await fetch(url, {method:"POST", headers:head, body:JSON.stringify(body)})
     return response
 }
+
+function dealOrderingResponse(result){
+    if (result["data"]){
+        setTimeout(()=>{
+            window.location.href =`/thankyou?number=${result["data"]["number"]}`
+        },3000)
+    }else{
+        transactionAnimationToggle(false);
+        alert("發生錯誤，請再次嘗試")
+    }
+}
+
 function isContactInfoNull(){
     const contactName = document.getElementById("contact_name").value
     const contactEmail = document.getElementById("contact_email").value
@@ -295,9 +297,12 @@ function isContactInfoNull(){
     return false
 }
 
+window.deleteBookingTour = deleteBookingTour;
 window.submitPayment = submitPayment;
 
+showBookingList();
 setUpCardField();
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Develope Queue
 // function isEmailValid(){}
