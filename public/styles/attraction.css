@@ -22,6 +22,29 @@ body::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
 
+.preload {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: #FFF;
+  z-index: 100;
+}
+.preload .rotate-animation {
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  border: 12px solid #E8E8E8;
+  border-radius: 50%;
+  border-right-color: #489;
+  animation: spin 1s ease infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .separator {
   width: 100%;
   border: none;

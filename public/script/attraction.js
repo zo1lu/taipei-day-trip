@@ -138,6 +138,10 @@ window.plusSlide = plusSlide;
 window.setTourPrice = setTourPrice;
 window.bookTour = bookTour;
 
+window.onload = function(){
+    //hide the preloader
+    document.querySelector(".preload").style.display = "none";
+}
 
 addAttractionData(id)
 .then(()=>{

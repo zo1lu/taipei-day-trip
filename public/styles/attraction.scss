@@ -24,6 +24,31 @@ body{
         display: none;  /* Safari and Chrome */
     };
 };
+.preload{
+    display: flex;
+    position: fixed;
+
+    width:100%;
+    height:100vh;
+    background-color: $White;
+    z-index: 100;
+    .rotate-animation{
+
+        width:100px;
+        height:100px;
+        margin:auto;
+
+        border: 12px solid $secondary-color-gray-20;
+        border-radius: 50%;
+        border-right-color: $primary-color-cyan-70;
+        animation: spin 1s ease infinite;
+    }
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);            
+        };
+    }
+}
 // attraction page
 .separator{
     width:100%;
