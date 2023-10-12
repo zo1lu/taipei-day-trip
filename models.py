@@ -197,8 +197,6 @@ def delete_booking(booking_id):
         return False
 
 def create_order_data(user_id, total_price, name, email, phone):
-    # add order data into database
-    # alter orders database table
     try:
         order_number = create_order_number()
         con = mysql.connect(**DB_CONFIG)
@@ -214,7 +212,7 @@ def create_order_data(user_id, total_price, name, email, phone):
         return False
 
 def update_bookings_order_id(user_id, order_id):
-    # find all the unorderd booking of the user?
+    # find all the unorderd booking of the user? v
     # Or pass all the bookingId that are going to ordered?
     # add order_id and change ordered to true 
     try:
@@ -252,14 +250,11 @@ def pay_order(prime, total_price, card_holder):
             "remember": False
         }
         response = requests.post(url, headers = head, json = body)
-        print(response)
         return response
     except Exception as e:
-        print("pay order error",e)
+        print(e)
         return False
-    #send request
-    #get response
-    #return response
+
     
 def update_payment_status(order_id, status):
     try:
@@ -270,7 +265,7 @@ def update_payment_status(order_id, status):
         cursor.execute(query,(paid, order_id))
         con.commit()
     except Exception as e:
-        print("Update payment status",e)
+        print(e)
         return False
 
 def order_and_pay(user_id, prime, total_price, name, email, phone):
@@ -297,11 +292,10 @@ def order_and_pay(user_id, prime, total_price, name, email, phone):
             }
             return return_data
     except Exception as e:
-        print("order and pay error",e)
+        print(e)
         return False
 
 def get_order_by_order_number(order_number):
-    #get order and details by order number
     try:
         con = mysql.connect(**DB_CONFIG)
         cursor = con.cursor(dictionary=True)
@@ -311,7 +305,7 @@ def get_order_by_order_number(order_number):
         result = {**order, "created_time": order["created_time"].strftime('%Y-%m-%d')}
         return result
     except Exception as e:
-        print("1: ",e)
+        print(e)
 
 def get_booking_detail_by_orderId(order_id):
     try:
@@ -323,18 +317,20 @@ def get_booking_detail_by_orderId(order_id):
         result = list(map(lambda book:{**book, "date": book["date"].strftime('%Y-%m-%d')}, bookings))
         return result
     except Exception as e:
-        print("2: ",e)
+        print(e)
     
-# create_order_data(1, 9000, "test", "test@gmail.com", "0912345678")
+
 def get_order_full_data(order_number):
     try:
         order_data = get_order_by_order_number(order_number)
         tour_data = get_booking_detail_by_orderId(order_data["id"])
         full_data = {**order_data,"trip":tour_data}
-        # print(full_data)
         return full_data
     except Exception as e:
-        print("3: ",e)
+        print(e)
 
+########################################################################
+# For testing
+# create_order_data(1, 9000, "test", "test@gmail.com", "0912345678")
 # get_order_full_data("TTO231003372YH")
 
